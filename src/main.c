@@ -17,9 +17,11 @@ int main ( int argc, char** argv, char** envv ) {
 
 	float version ;
 
+	if(argv[1] == NULL)
+		fprintf(stderr,"Error: Precise the file to examine");
 
 	file = ply_open_for_reading( argv[1], &nelems, &elem_names, &file_type, &version ) ;
-
+	
 
 	switch (file_type) {
 
@@ -59,7 +61,6 @@ int main ( int argc, char** argv, char** envv ) {
 
 
 	}
-
 	
 
  	return 0 ;
