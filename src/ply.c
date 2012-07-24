@@ -2393,6 +2393,7 @@ Entry:
 
 void add_property (PlyFile *plyfile, char **words, int nwords)
 {
+
   int prop_type;
   int count_type;
   PlyProperty *prop;

@@ -2,12 +2,44 @@
 #include <stdlib.h>
 #include "ply.h"
 
+void *allocmem(size_type)
+{
+int* tmp;
+
+	if(size_type == 0) 
+	 	fprintf(stderr,"Invalid type file");
+
+	if(size_type == 1 ) 
+		tmp = malloc( sizeof (int));
+
+	if(size_type == 2) 
+		tmp = malloc(2 * sizeof (int));
+
+	if(size_type == 3) 
+		tmp = malloc( 4* sizeof (int));
+
+	if(size_type ==  4) 
+		tmp = malloc( sizeof (int));
+	
+	if(size_type == 5) 
+		tmp = malloc(2 * sizeof (int));
+
+	if(size_type == 6) 
+		tmp = malloc(4 * sizeof (int));
+
+	if(size_type == 7) 
+		tmp = malloc(4 * sizeof (int));
+
+	if(size_type == 8) 
+		tmp = malloc(8 * sizeof (int));
+}
+
 
 int main ( int argc, char** argv, char** envv ) {
 
 	PlyFile* file ;
 
-	int i ;
+	int i,j ;
 	
 	int nelems ;
 	char** elem_names ;
@@ -56,13 +88,27 @@ int main ( int argc, char** argv, char** envv ) {
 
 		prop = ply_get_element_description( file, elem_names[i], &nb, &nprops ) ;
 		
-		printf("        -> %d \n", nb ) ;
+		printf("        -> %d occurences \n", nb ) ;
 		printf("        -> %d properties \n", nprops ) ;
+		
+		for (j=0; j<nprops; j++ ) {
+		
+		int* type_word;
 
+			printf("%s \n", prop[j]->name ) ;
+			printf("%i \n", prop[j]->external_type ) ;
+			//type_word = prop[j]->external_type;
+			//allocmem(type_word);
+					
+			//ply_get_element(file, allocmem );
+		}
+
+		
+//	ply_get_element_setup( file, elem_names[0], 1, *prop ) ;
+//	ply_get_element(file, filetypename);
 
 	}
-	
-
- 	return 0 ;
+ 	
+	return 0 ;
 
 }
