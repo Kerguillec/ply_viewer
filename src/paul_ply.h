@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-//#include "ply.h"
 
 
 double * allocmem(int size_type);

@@ -1,7 +1,8 @@
 #ifndef TRIANGLE_H
 #define TRIANGLE_H
 
-#include "point.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 
 typedef struct {
@@ -13,7 +14,9 @@ typedef struct {
 
 } Ttriangle ;
 
+Ttriangle* triangle_malloc(Tpoint* point1, Tpoint* point2, Tpoint* point3);
 
+void triangle_free(Ttriangle*);
 
 #endif
 
