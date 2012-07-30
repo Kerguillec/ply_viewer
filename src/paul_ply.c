@@ -9,40 +9,6 @@ Paul Kerguillec Jully 2012.
 #include "paul_ply.h"
 
 
-double* allocmem(int size_type)
-{
-double* tmp;
-printf("Debug: %i\n",size_type);
-	if( size_type == 0 ) 
-	 	fprintf(stderr,"Invalid type file");
-
-	if( size_type == 1 ) 
-		tmp = malloc(3 * sizeof (double));
-
-	if( size_type == 2 ) 
-		tmp = malloc(6 * sizeof (double));
-
-	if( size_type == 3 ) 
-		tmp = malloc(12 * sizeof (double));
-
-	if( size_type == 4 ) 
-		tmp = malloc(3 * sizeof (double));
-	
-	if( size_type == 5 ) 
-		tmp = malloc(6 * sizeof (double));
-
-	if( size_type == 6 ) 
-		tmp = malloc(12 * sizeof (double));
-
-	if( size_type == 7 ) 
-		tmp = malloc(12 * sizeof (double));
-
-	if( size_type == 8 ) 
-		tmp = malloc(24 * sizeof (double));
-return tmp;
-}
-
-
 int ply_load (char* var_env) {
 
 	PlyFile* file ;
@@ -56,6 +22,11 @@ int ply_load (char* var_env) {
 	char filetypename[100] ;
 
 	float version ;
+
+	double* X ;
+	double* Y ;
+	double* Z ;
+	int nb_points ;
 
 	if(var_env == NULL)
 		fprintf(stderr,"Error: Precise the file to examine");
@@ -81,12 +52,11 @@ int ply_load (char* var_env) {
 	
 	
 	printf("file type : %s \n", filetypename ) ;
-	
 	printf("version : %f\n", version ) ;
-
 	printf("read %d elements : \n", nelems ) ;
 	
-	
+
+
 	for ( i=0; i<nelems; i++ ) {
 		printf("Element -> %s \n", elem_names[i] ) ;
 
@@ -99,24 +69,57 @@ int ply_load (char* var_env) {
 		printf("        -> %d occurences \n", nb ) ;
 		printf("        -> %d properties \n", nprops ) ;
 		
+		if ( strcmp( elem_names[i], "vertex" ) == 0 ) {
+
+			nb_points = nb ;
+			X = (double*) malloc ( nb*sizeof(double) ) ;
+			Y = (double*) malloc ( nb*sizeof(double) ) ;
+			Z = (double*) malloc ( nb*sizeof(double) ) ;
+
+
+		}
+		
 		for (j=0; j<nprops; j++ ) {
 		
-		int type_word;
-		double* D;
-			printf("\n\nName: %s \n", prop[j]->name ) ;
-			printf("Type of this: %i \n", prop[j]->external_type ) ;
-			type_word = prop[j]->external_type;
-				
-			D = allocmem(type_word);	
-			ply_get_element( file, &D );
-			free(D);
-		}
+			printf("		Name: %s \n", prop[j]->name ) ;
+	
+			if ( strcmp( elem_names[i], "vertex" ) == 0 ) {
 
-		
-//	ply_get_element_setup( file, elem_names[0], 1, *prop ) ;
-//	ply_get_element(file, filetypename);
+
+				if ( strcmp( prop[j]->name,"x" ) == 0 ) {
+					printf("x\n") ;
+					prop[j]->internal_type = PLY_DOUBLE ;	
+					ply_get_element_setup(file,elem_names[i], 1, prop[j] ) ;
+			                ply_get_element(file, X ) ;
+				}
+
+	/*			if ( strcmp( prop[j]->name,"y" ) == 0 ) {
+					prop[j]->internal_type = PLY_DOUBLE ;	
+					ply_get_element_setup(file,elem_names[i], 1, prop[j] ) ;
+			                ply_get_element(file, Y ) ;
+				}
+
+
+				if ( strcmp( prop[j]->name,"z" ) == 0 ) {
+					prop[j]->internal_type = PLY_DOUBLE ;	
+					ply_get_element_setup(file,elem_names[i], 1, prop[j] ) ;
+			                ply_get_element(file, Z ) ;
+				}
+*/
+			}
+	
+		}
 
 	}
 }
+
+//	for (i=0; i<nb_points; i++) 
+//		printf("%lf %lf %lf \n", X[i], Y[i], Z[i] ) ;
+
+
+	free(X) ;
+	free(Y) ;
+	free(Z) ;
+
 	return 0;
 }
