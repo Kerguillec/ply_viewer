@@ -7,9 +7,9 @@
 //#include "ply.h"
 
 
-//void * allocmem(size_type);
+double * allocmem(int size_type);
 
 
-void ply_load(char* var_env);
+int ply_load(char* var_env);
 
 #endif

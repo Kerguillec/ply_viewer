@@ -8,41 +8,42 @@ Paul Kerguillec Jully 2012.
 #include "ply.h"
 #include "paul_ply.h"
 
-/*
-void *allocmem(size_type)
-{
-int* tmp;
 
-	if(size_type == 0) 
+double* allocmem(int size_type)
+{
+double* tmp;
+printf("Debug: %i\n",size_type);
+	if( size_type == 0 ) 
 	 	fprintf(stderr,"Invalid type file");
 
-	if(size_type == 1 ) 
-		tmp = malloc( sizeof (int));
+	if( size_type == 1 ) 
+		tmp = malloc(3 * sizeof (double));
 
-	if(size_type == 2) 
-		tmp = malloc(2 * sizeof (int));
+	if( size_type == 2 ) 
+		tmp = malloc(6 * sizeof (double));
 
-	if(size_type == 3) 
-		tmp = malloc( 4* sizeof (int));
+	if( size_type == 3 ) 
+		tmp = malloc(12 * sizeof (double));
 
-	if(size_type ==  4) 
-		tmp = malloc( sizeof (int));
+	if( size_type == 4 ) 
+		tmp = malloc(3 * sizeof (double));
 	
-	if(size_type == 5) 
-		tmp = malloc(2 * sizeof (int));
+	if( size_type == 5 ) 
+		tmp = malloc(6 * sizeof (double));
 
-	if(size_type == 6) 
-		tmp = malloc(4 * sizeof (int));
+	if( size_type == 6 ) 
+		tmp = malloc(12 * sizeof (double));
 
-	if(size_type == 7) 
-		tmp = malloc(4 * sizeof (int));
+	if( size_type == 7 ) 
+		tmp = malloc(12 * sizeof (double));
 
-	if(size_type == 8) 
-		tmp = malloc(8 * sizeof (int));
+	if( size_type == 8 ) 
+		tmp = malloc(24 * sizeof (double));
+return tmp;
 }
-*/
 
-void ply_load (char* var_env) {
+
+int ply_load (char* var_env) {
 
 	PlyFile* file ;
 
@@ -58,7 +59,7 @@ void ply_load (char* var_env) {
 
 	if(var_env == NULL)
 		fprintf(stderr,"Error: Precise the file to examine");
-
+	else{
 	file = ply_open_for_reading( var_env, &nelems, &elem_names, &file_type, &version ) ;
 	
 
@@ -74,7 +75,7 @@ void ply_load (char* var_env) {
 			sprintf(filetypename,"BINARY BIG ENDIAN" ) ;
 			break ;
 		default :
-			fprintf(stderr,"this file type is unknown.\n") ;
+			fprintf(stderr,"This file type is unknown.\n") ;
 			return -1 ;
 	}
 	
@@ -100,14 +101,15 @@ void ply_load (char* var_env) {
 		
 		for (j=0; j<nprops; j++ ) {
 		
-		int* type_word;
-
-			printf("%s \n", prop[j]->name ) ;
-			printf("%i \n", prop[j]->external_type ) ;
-			//type_word = prop[j]->external_type;
-			//allocmem(type_word);
-					
-			//ply_get_element(file, allocmem );
+		int type_word;
+		double* D;
+			printf("\n\nName: %s \n", prop[j]->name ) ;
+			printf("Type of this: %i \n", prop[j]->external_type ) ;
+			type_word = prop[j]->external_type;
+				
+			D = allocmem(type_word);	
+			ply_get_element( file, &D );
+			free(D);
 		}
 
 		
@@ -115,5 +117,6 @@ void ply_load (char* var_env) {
 //	ply_get_element(file, filetypename);
 
 	}
-
+}
+	return 0;
 }
