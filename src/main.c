@@ -5,7 +5,7 @@
 
 int main ( int argc, char** argv, char** envv ) {
  
-	ply_load(argv[1]);
+//	ply_load(argv[1]);
 	
 	return 0 ;
 
