@@ -6,7 +6,7 @@
 
 
 
-double * allocmem(int size_type);
+double* allocmem(int size_type);
 
 
 int ply_load(char* var_env);

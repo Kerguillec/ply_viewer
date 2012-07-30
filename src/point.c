@@ -5,19 +5,14 @@
 
 Tpoint* point_malloc(double x, double y, double z){
 
-	double* tmp;
-	tmp = malloc (sizeof(double));
-
+	Tpoint* tmp;
+	tmp = (Tpoint*) malloc (sizeof(Tpoint));
 	tmp->x;
 	tmp->y;
 	tmp->z;
-return tmp;
+	return tmp;
 }
 
-void point_free(Tpoint*){
-
-
-	free(Tpoint*);
-
-
+void point_free(Tpoint* point){
+	free(point);
 }

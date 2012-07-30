@@ -1,8 +1,7 @@
 #ifndef TRIANGLE_H
 #define TRIANGLE_H
 
-#include <stdio.h>
-#include <stdlib.h>
+#include "point.h"
 
 
 typedef struct {
