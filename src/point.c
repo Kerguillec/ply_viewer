@@ -2,7 +2,19 @@
 #include <stdlib.h>
 
 #include "point.h"
+/**************************
+ 
 
+Entry : 
+- Point's coordinate  from ply file
+
+
+Exit :
+- Point's structure
+
+
+
+************************/
 Tpoint* point_malloc(double x, double y, double z){
 
 	Tpoint* tmp;
