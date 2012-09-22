@@ -8,16 +8,23 @@
 int main ( int argc, char** argv, char** envv ) {
  
 //	ply_load(argv[1]);
-	Tpoint* points;
-
-	points = point_malloc(1,1,1);
-	debug_Pcoordinates(points->x, points->y, points->z);	
+	Tpoint* points1;
+	Tpoint* points2;
+	Tpoint* points3;
 	
+	points1 = point_malloc(1,1,1);
+	debug_Pcoordinates(points1->x, points1->y, points1->z);	
+	
+	points2 = point_malloc(2,2,2);
+	debug_Pcoordinates(points2->x, points2->y, points2->z);	
+
+	points3 = point_malloc(5,3,2);
+	debug_Pcoordinates(points3->x, points3->y, points3->z);	
 
 	Ttriangle* triangle;
-
-	triangle = triangle_malloc(points, points, points);
-	debug_Tcoordinates(triangle->p1, triangle->p2, triangle->p3);
+	
+	triangle = triangle_malloc(points1, points2, points3);
+	//debug_Tcoordinates(triangle->p1->x, triangle->p1->y, triangle->p1->z);
 	return 0 ;
 
 }

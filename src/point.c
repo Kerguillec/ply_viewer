@@ -29,6 +29,9 @@ void debug_Pcoordinates(double X, double Y, double Z){
 }
 
 
+/****************************************
+Free the points memory allocation.  
+*****************************************/
 
 void point_free(Tpoint* point){
 	free(point);
