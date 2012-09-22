@@ -14,7 +14,7 @@ typedef struct {
 } Ttriangle ;
 
 Ttriangle* triangle_malloc(Tpoint* point1, Tpoint* point2, Tpoint* point3);
-
+void debug_Tcoordinates(double X, double Y, double Z);
 void triangle_free(Ttriangle*);
 
 #endif
