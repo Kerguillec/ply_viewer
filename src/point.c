@@ -25,7 +25,7 @@ Exit:
 *************************/
 void debug_Pcoordinates(double X, double Y, double Z){
 
-	printf("Points coordinates:\nx = %lf\ny = %lf\nz = %lf\n",X,Y,Z);
+	fprintf(stderr,"Points coordinates:\n       x = %lf\n       y = %lf\n	z = %lf\n",X,Y,Z);
 }
 
 
