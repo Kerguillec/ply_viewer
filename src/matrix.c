@@ -58,14 +58,6 @@ Keep It Simple, and Stupid ? (KISS philosophy =) )
 Free the matrix_malloc ... 
 ***********************************************************************/
 
-void matrix_free(Ttriangle* triangle){
+void matrix_free(Tmatrix* matrix){
 free(matrix);
 }
-
-
-
-
-***********************************************************************/
-
-
-

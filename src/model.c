@@ -13,11 +13,13 @@ Exit :
 - Will give the entire modelisation of your object. 
 ********************************/
 
-Tmodel* model_malloc(int nb_points, int nb_triangles){
+Tmodel* model_malloc(Tpoint** tab_points, int nb_points, int nb_triangles, Ttriangle** tab_triangle){
 	Tmodel* tmp;
-
 	tmp = (Tmodel*) malloc(sizeof (Tmodel) );
-/*	tmp->nb_p=nb_points;
+/*
+	tmp->
+	tmp->nb_p=nb_points;
+
 	tmp->
 	tmp->nb_t=nb_triangles;
 */	
