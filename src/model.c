@@ -17,10 +17,10 @@ Tmodel* model_malloc(Tpoint** tab_points, int nb_points, int nb_triangles, Ttria
 	Tmodel* tmp;
 	tmp = (Tmodel*) malloc(sizeof (Tmodel) );
 /*
-	tmp->
+	tmp->tab_points=
 	tmp->nb_p=nb_points;
 
-	tmp->
+	tmp->tab_triangles;
 	tmp->nb_t=nb_triangles;
 */	
 	return tmp;

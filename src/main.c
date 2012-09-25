@@ -24,7 +24,7 @@ int main ( int argc, char** argv, char** envv ) {
 	Ttriangle* triangle;
 	
 	triangle = triangle_malloc(points1, points2, points3);
-	debug_Tcoordinates(triangle, triangle, triangle);
+	debug_Tcoordinates(triangle);
 	return 0 ;
 
 }

@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <stdlib.h>
 #include "matrix.h"
 
 /*******************************************************************
@@ -12,7 +14,7 @@ Exit: your 3x3 matrix.
 
 Tmatrix* matrix_malloc(double xi, double yi, double zi, double xj, double yj, double zj, double xk, double yk, double zk){
 	Tmatrix* tmp;
-	tmp = (Tmatrix *) malloc(sizeof (Tmatrix) );
+	tmp = (Tmatrix*) malloc(sizeof (Tmatrix) );
 	
         tmp->xi=xi;
         tmp->yi=yi;
@@ -23,7 +25,7 @@ Tmatrix* matrix_malloc(double xi, double yi, double zi, double xj, double yj, do
         tmp->xk=xk;
         tmp->yk=yk;
         tmp->zk=zk;
-
+return tmp;
 }
 
 /*********************************************************************
