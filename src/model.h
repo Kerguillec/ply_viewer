@@ -15,11 +15,13 @@ typedef struct {
 
 } Tmodel ;
 
-Tmodel* model_malloc(Tpoint** tab_points, int nb_points, int nb_triangles, Ttriangle** tab_triangle);
+Tmodel* model_malloc();
 
-void model_free(Tmodel*);
+void model_add_point(Tmodel*, int point);
 
+void model_add_triangle(Tmodel*, int triangle);
 
+// void model_free(Tmodel*);
 
 
 #endif

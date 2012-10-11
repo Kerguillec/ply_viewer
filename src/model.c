@@ -13,19 +13,26 @@ Exit :
 - Will give the entire modelisation of your object. 
 ********************************/
 
-Tmodel* model_malloc(int nb_points, int nb_triangles){
+Tmodel* model_malloc(){
 	Tmodel* tmp;
 	tmp = (Tmodel*) malloc(sizeof (Tmodel) );
 	return tmp;
 }
 
-void model_setpoint(Tmodel*, int i, int x, int y, int z){
+void model_add_point(Tmodel*, int point){
+Tmodel* add_point;
+add_point=model_malloc();
 
-
+add_point[0]=point;
+fprintf(stderr," PointAdded= %i \n ",add_point[0]);
 
 }
 
-void model_settriangle(Tmodel*, int j, int p1, int p2, int p3){
+
+
+
+
+void model_add_triangle(Tmodel*, int triangle){
 
 
 
