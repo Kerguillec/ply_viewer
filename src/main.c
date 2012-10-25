@@ -4,7 +4,7 @@
 #include "paul_ply.h"
 #include "point.h"
 #include "triangle.h"
-
+#include "model.h"
 int main ( int argc, char** argv, char** envv ) {
  
 //	ply_load(argv[1]);
@@ -25,6 +25,9 @@ int main ( int argc, char** argv, char** envv ) {
 	
 	triangle = triangle_malloc(points1, points2, points3);
 	debug_Tcoordinates(triangle);
+	
+	Tmodel* test;
+	test = model_malloc(); 
+	model_add_point(test, 2);
 	return 0 ;
-
 }

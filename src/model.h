@@ -17,9 +17,9 @@ typedef struct {
 
 Tmodel* model_malloc();
 
-void model_add_point(Tmodel*, int point);
+void model_add_point(Tmodel** add_point, int point);
 
-void model_add_triangle(Tmodel*, int triangle);
+void model_add_triangle(Tmodel* add_triangle, int triangle);
 
 // void model_free(Tmodel*);
 

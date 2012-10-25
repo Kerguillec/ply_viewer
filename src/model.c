@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "model.h"
-
+#include "point.h"
 
 /********************************
 Currently in development. That why for the moment you couldn't work with matrices.  
@@ -19,20 +19,18 @@ Tmodel* model_malloc(){
 	return tmp;
 }
 
-void model_add_point(Tmodel*, int point){
-Tmodel* add_point;
-add_point=model_malloc();
-
-add_point[0]=point;
-fprintf(stderr," PointAdded= %i \n ",add_point[0]);
-
+void model_add_point(Tmodel** add_point, int point){
+	Tpoint* point1;
+	point1 = point_malloc(9,8,7);
+	add_point[0] = point1;
+	fprintf(stderr," PointAdded= %i \n ",add_point[0]->point1->x);
 }
 
 
 
 
 
-void model_add_triangle(Tmodel*, int triangle){
+void model_add_triangle(Tmodel* add_triangle, int triangle){
 
 
 
