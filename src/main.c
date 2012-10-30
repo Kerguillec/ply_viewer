@@ -26,8 +26,10 @@ int main ( int argc, char** argv, char** envv ) {
 	triangle = triangle_malloc(points1, points2, points3);
 	debug_Tcoordinates(triangle);
 	
-	Tmodel* test;
-	test = model_malloc(); 
-	model_add_point(test, 2);
+	
+	Tmodel test;
+	model_add_point(&test, 2, 1, 2, 3);
+	
+
 	return 0 ;
 }

@@ -19,11 +19,14 @@ Tmodel* model_malloc(){
 	return tmp;
 }
 
-void model_add_point(Tmodel** add_point, int point){
-	Tpoint* point1;
-	point1 = point_malloc(9,8,7);
-	add_point[0] = point1;
-	fprintf(stderr," PointAdded= %i \n ",add_point[0]->point1->x);
+void model_add_point(Tmodel* addr_point, int i, double X, double Y, double Z){
+	Tpoint* point;
+	point = point_malloc(X,Y,Z);
+
+	addr_point->tab_points = &point;
+	addr_point->nb_points = i;
+
+	fprintf(stderr," Nombre de points %i \n ", addr_point->nb_points);
 }
 
 
