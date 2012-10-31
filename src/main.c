@@ -28,7 +28,9 @@ int main ( int argc, char** argv, char** envv ) {
 	
 	
 	Tmodel test;
-	model_add_point(&test, 2, 1, 2, 3);
+	test.nb_points = 0;
+
+	model_add_point(&test, 1, 2, 3);
 	
 
 	return 0 ;

@@ -19,14 +19,19 @@ Tmodel* model_malloc(){
 	return tmp;
 }
 
-void model_add_point(Tmodel* addr_point, int i, double X, double Y, double Z){
-	Tpoint* point;
-	point = point_malloc(X,Y,Z);
+void model_add_point(Tmodel* addr_point, double X, double Y, double Z){
+	Tpoint* point = point_malloc(X,Y,Z);
 
-	addr_point->tab_points = &point;
-	addr_point->nb_points = i;
+	//Save the location of the pointer "point" into the table "tab_points" ...  	
+	addr_point->tab_points[addr_point->nb_points] = &point;
+	addr_point->nb_points++;
 
-	fprintf(stderr," Nombre de points %i \n ", addr_point->nb_points);
+	fprintf(stderr,"----->DEBUG Nombre de points %i \n", addr_point->nb_points);
+	fprintf(stderr,"----->DEBUG @ du point dans tab_point %x \n", addr_point->tab_points[0]);
+	
+	//Try to print the value inside tab_point but that don't work ...
+	fprintf(stderr,"----->DEBUG Acces point dans tab_point %i \n", addr_point->tab_points[0]->x);
+	// Is not the good way ? 
 }
 
 

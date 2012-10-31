@@ -7,7 +7,7 @@
 
 typedef struct {
 
-	Tpoint** tab_points;
+	Tpoint** tab_points[100];
 	int nb_points;
 	
 	Ttriangle** tab_triangle;
@@ -17,7 +17,7 @@ typedef struct {
 
 Tmodel* model_malloc();
 
-void model_add_point(Tmodel* addr_point, int i, double X, double Y, double Z);
+void model_add_point(Tmodel* addr_point,double X, double Y, double Z);
 
 void model_add_triangle(Tmodel* add_triangle, int triangle);
 
