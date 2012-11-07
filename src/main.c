@@ -31,7 +31,19 @@ int main ( int argc, char** argv, char** envv ) {
 	test.nb_points = 0;
 
 	model_add_point(&test, 1, 2, 3);
+	model_add_point(&test, 654, 12, 13);
+	model_add_point(&test, 11, 521, 81);
+
+	Tmodel ACtriangle;
+	ACtriangle.nb_triangles = 0;
 	
+	model_add_triangle(&ACtriangle, 1, test.tab_points[0], test.tab_points[1], test.tab_points[2]);	
+
+	point_free(points1);
+	point_free(points2);
+	point_free(points3);
+
+	triangle_free(triangle);
 
 	return 0 ;
 }

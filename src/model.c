@@ -7,7 +7,7 @@
 Currently in development. That why for the moment you couldn't work with matrices.  
 
 Entry :
-- Model.c is wrapping all the structures of Point, Triangle and Matrix
+- Model.c is wrapping all structures of a Point, Triangle and Matrix(later).
 
 Exit :
 - Will give the entire modelisation of your object. 
@@ -19,27 +19,47 @@ Tmodel* model_malloc(){
 	return tmp;
 }
 
-void model_add_point(Tmodel* addr_point, double X, double Y, double Z){
+void model_add_point(Tmodel* model, double X, double Y, double Z){
 	Tpoint* point = point_malloc(X,Y,Z);
 
 	//Save the location of the pointer "point" into the table "tab_points" 
-	addr_point->tab_points[addr_point->nb_points] = point;
-	addr_point->nb_points++;
+	model->tab_points[model->nb_points] = point;
+	model->nb_points++;
 
-	fprintf(stderr,"----->DEBUG How many points: %i \n", addr_point->nb_points);
-	fprintf(stderr,"----->DEBUG @ of point in tab_point %x \n", addr_point->tab_points[0]);
+	fprintf(stderr,"----->DEBUG Which point: %i \n", model->nb_points);
+	fprintf(stderr,"----->DEBUG @ of point in tab_point %x \n", model->tab_points[model->nb_points-1]);
 	// Print the field of the structure Tpoint	
-	fprintf(stderr,"----->DEBUG Point: %lf \n", addr_point->tab_points[0]->x);
+	fprintf(stderr,"----->DEBUG Point X: %lf \n", model->tab_points[model->nb_points-1]->x);
+	fprintf(stderr,"----->DEBUG Point Y: %lf \n", model->tab_points[model->nb_points-1]->y);
+	fprintf(stderr,"----->DEBUG Point Z: %lf \n\n", model->tab_points[model->nb_points-1]->z);
 }
 
 
 
 
 
-void model_add_triangle(Tmodel* add_triangle, int triangle){
+void model_add_triangle(Tmodel* model, int triangle, Tpoint* p1, Tpoint* p2, Tpoint* p3){
 
+	Ttriangle* Atriangle = triangle_malloc(p1,p2,p3);
 
+	//Save the location of the pointer "triangle" into the table "tab_triangle" 
+	model->tab_triangle[model->nb_triangles] = Atriangle;
+	model->nb_triangles++;
 
+	fprintf(stderr,"----->DEBUG How many triangless: %i \n", model->nb_triangles);
+	fprintf(stderr,"----->DEBUG @ of triangle in tab_triangle %x \n", model->tab_triangle[0]);
+	// Print the field of the structure Ttriangle	
+	fprintf(stderr,"----->DEBUG triange : %lf \n", model->tab_triangle[model->nb_triangles-1]->p1->x);
+	fprintf(stderr,"----->DEBUG triange : %lf \n", model->tab_triangle[model->nb_triangles-1]->p1->y);
+	fprintf(stderr,"----->DEBUG triange : %lf \n\n", model->tab_triangle[model->nb_triangles-1]->p1->z);
+
+	fprintf(stderr,"----->DEBUG triange : %lf \n", model->tab_triangle[model->nb_triangles-1]->p2->x);
+	fprintf(stderr,"----->DEBUG triange : %lf \n", model->tab_triangle[model->nb_triangles-1]->p2->y);
+	fprintf(stderr,"----->DEBUG triange : %lf \n\n", model->tab_triangle[model->nb_triangles-1]->p2->z);
+
+	fprintf(stderr,"----->DEBUG triange : %lf \n", model->tab_triangle[model->nb_triangles-1]->p3->x);
+	fprintf(stderr,"----->DEBUG triange : %lf \n", model->tab_triangle[model->nb_triangles-1]->p3->y);
+	fprintf(stderr,"----->DEBUG triange : %lf \n\n", model->tab_triangle[model->nb_triangles-1]->p3->z);
 
 }
 
