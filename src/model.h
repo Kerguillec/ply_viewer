@@ -7,7 +7,7 @@
 
 typedef struct {
 
-	Tpoint** tab_points[100];
+	Tpoint* tab_points[100];
 	int nb_points;
 	
 	Ttriangle** tab_triangle;
