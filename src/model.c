@@ -20,6 +20,20 @@ Tmodel* model_malloc(){
 }
 
 void model_add_point(Tmodel* model, double X, double Y, double Z){
+
+        int Length;
+	// Verify if it's the first use of the points table.
+        if(model->nb_points == 0){ // If this condition is true that means we have to initialise the length and allocate the memory. 
+                Length = 100;
+                model->tab_points = malloc((Length)*sizeof(Tpoint*));
+        }           
+	
+	// It verify if the length of the table is enough, if isn't the case that means we have to realloc. 
+        if(model->nb_points >= Length){
+                Length *= 1000; 
+                model->tab_points = realloc(model->tab_points, (Length)*sizeof(Tpoint*));
+        }
+
 	Tpoint* point = point_malloc(X,Y,Z);
 
 	//Save the location of the pointer "point" into the table "tab_points" 
@@ -39,6 +53,20 @@ void model_add_point(Tmodel* model, double X, double Y, double Z){
 
 
 void model_add_triangle(Tmodel* model, int triangle, Tpoint* p1, Tpoint* p2, Tpoint* p3){
+
+        int Length; // Length for table. It's initialised in the next condition. 
+
+    	// It verify if it's the first use of the triangles table.
+        if(model->nb_triangles == 0){ // If this condition is true that means we have to initialise the length and allocate the mem.
+                Length = 100;
+                model->tab_triangle = malloc((Length)*sizeof(Tpoint*));
+        }    
+	
+	// It verify if the length of the table is enough, if isn't the case that means we have to realloc.
+        if(model->nb_triangles >= Length){
+                Length *= 1000; 
+                model->tab_triangle = realloc(model->tab_triangle, (Length)*sizeof(Ttriangle*));
+        }  
 
 	Ttriangle* Atriangle = triangle_malloc(p1,p2,p3);
 
