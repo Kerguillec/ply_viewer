@@ -12,20 +12,32 @@ Exit: your 3x3 matrix.
 
 ********************************************************************/
 
-Tmatrix* matrix_malloc(double xi, double yi, double zi, double xj, double yj, double zj, double xk, double yk, double zk){
+Tmatrix* matrix_malloc( double wi, double xi, double yi, double zi, 
+			double wj, double xj, double yj, double zj, 
+			double wk, double xk, double yk, double zk,
+			double wl, double xl, double yl, double zl ) { 
+			
 	Tmatrix* tmp;
 	tmp = (Tmatrix*) malloc(sizeof (Tmatrix) );
 	
+        tmp->wi=wi;
         tmp->xi=xi;
         tmp->yi=yi;
         tmp->zi=zi;
+	tmp->wj=wj;
         tmp->xj=xj;
         tmp->yj=yj;
         tmp->zj=zj;
+	tmp->wk=wk;
         tmp->xk=xk;
         tmp->yk=yk;
         tmp->zk=zk;
-return tmp;
+	tmp->wl=wl;
+        tmp->xl=xl;
+        tmp->yl=yl;
+        tmp->zl=zl;
+
+	return tmp;
 }
 
 /*********************************************************************
@@ -39,20 +51,11 @@ Exit: give you a matrix identity
 *********************************************************************/
 Tmatrix* matrix_identity(){
 
-	Tmatrix* tmp;
-	tmp = (Tmatrix *) malloc(sizeof (Tmatrix) );
-	
-        tmp->xi=1;
-        tmp->yi=0;
-        tmp->zi=0;
-        tmp->xj=0;
-        tmp->yj=1;
-        tmp->zj=0;
-        tmp->xk=0;
-        tmp->yk=0;
-        tmp->zk=1;
+	return matrix_malloc ( 1.0, 0.0, 0.0, 0.0, 
+	                       0.0, 1.0, 0.0, 0.0,
+			       0.0, 0.0, 1.0, 0.0,
+			       0.0, 0.0, 0.0, 1.0 ) ;
 
-return tmp;
 }
 
 /***********************************************************************
@@ -61,5 +64,5 @@ Free the matrix_malloc ...
 ***********************************************************************/
 
 void matrix_free(Tmatrix* matrix){
-free(matrix);
+	free(matrix);
 }

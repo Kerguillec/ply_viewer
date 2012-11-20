@@ -27,27 +27,28 @@ int main ( int argc, char** argv, char** envv ) {
 	debug_Tcoordinates(triangle);
 	
 	
-	Tmodel test;
-	test.nb_points = 0;
+	Tmodel* test;
+	
+	test = model_malloc() ;
+	
 	int i;	
 	// How To use model_add_point & model_add_triangle:
 	for(i=0; i<10; i++)
 	{
-		model_add_point(&test, 1, 2, 3);
-		model_add_point(&test, 654, 12, 13);
-		model_add_point(&test, 11, 521, 81);
+		model_add_point(test, 1, 2, 3);
+		model_add_point(test, 654, 12, 13);
+		model_add_point(test, 11, 521, 81);
 	}
 
-	Tmodel ACtriangle;
-	ACtriangle.nb_triangles = 0;
 	for(i=0; i<10; i++)
-		model_add_triangle(&ACtriangle, 1, test.tab_points[0], test.tab_points[1], test.tab_points[2]);	
+		model_add_triangle(test, test->tab_points[0], test->tab_points[1], test->tab_points[2]);	
 	
 	point_free(points1);
 	point_free(points2);
 	point_free(points3);
 
 	triangle_free(triangle);
+
 
 	return 0 ;
 }
