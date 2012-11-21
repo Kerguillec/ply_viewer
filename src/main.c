@@ -42,6 +42,18 @@ int main ( int argc, char** argv, char** envv ) {
 
 	for(i=0; i<10; i++)
 		model_add_triangle(test, test->tab_points[0], test->tab_points[1], test->tab_points[2]);	
+		
+	// Set the matrix position of Tmodel* test	
+	Tmatrix* matrix;
+	matrix=matrix_malloc(5.0,4.0,3.0,2.0,
+						1.0,5.0,3.0,2.0,
+						4.0,5.0,6.0,7.0,
+						8.0,9.0,2.0,1.0) ;
+						
+	model_set_posmat(test,matrix);	
+		
+		
+		
 	
 	point_free(points1);
 	point_free(points2);

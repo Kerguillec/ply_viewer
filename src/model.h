@@ -25,7 +25,8 @@ Tmodel* model_malloc();
 
 void model_add_point(Tmodel* model, double X, double Y, double Z);
 void model_add_triangle(Tmodel* model, Tpoint* p1, Tpoint* p2, Tpoint* p3);
-
+void model_set_posmat(Tmodel* model, Tmatrix* matrix);
+void model_mult_posmat(Tmodel* model, Tmatrix* matrix);
 void model_free(Tmodel);
 
 
