@@ -140,8 +140,28 @@ void model_set_posmat(Tmodel* model, Tmatrix* matrix) {
         model->pos->xl=matrix->xl;
         model->pos->yl=matrix->yl;
         model->pos->zl=matrix->zl;
+		
+#if ( DEBUG )
+
+fprintf(stderr," Debug Position Matrix : %lf ",model->pos->wi);
+fprintf(stderr," Debug Position Matrix : %lf ",model->pos->xi);
+fprintf(stderr," Debug Position Matrix : %lf ",model->pos->yi);
+fprintf(stderr," Debug Position Matrix : %lf ",model->pos->zi);
+fprintf(stderr," Debug Position Matrix : %lf ",model->pos->wj);
+fprintf(stderr," Debug Position Matrix : %lf ",model->pos->xj);
+fprintf(stderr," Debug Position Matrix : %lf ",model->pos->yj);
+fprintf(stderr," Debug Position Matrix : %lf ",model->pos->zj);
+fprintf(stderr," Debug Position Matrix : %lf ",model->pos->wk);
+fprintf(stderr," Debug Position Matrix : %lf ",model->pos->xk);
+fprintf(stderr," Debug Position Matrix : %lf ",model->pos->yk);
+fprintf(stderr," Debug Position Matrix : %lf ",model->pos->zk);
+fprintf(stderr," Debug Position Matrix : %lf ",model->pos->wl);
+fprintf(stderr," Debug Position Matrix : %lf ",model->pos->xl);
+fprintf(stderr," Debug Position Matrix : %lf ",model->pos->yl);
+fprintf(stderr," Debug Position Matrix : %lf ",model->pos->zl);
 
 
+#endif
 }
 
 void model_mult_posmat(Tmodel* model, Tmatrix* matrix) {

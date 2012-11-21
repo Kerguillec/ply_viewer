@@ -62,7 +62,6 @@ Tmatrix* matrix_identity(){
 Keep It Simple, and Stupid ? (KISS philosophy =) )
 Free the matrix_malloc ... 
 ***********************************************************************/
-
 void matrix_free(Tmatrix* matrix){
 	free(matrix);
 }
