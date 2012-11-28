@@ -58,7 +58,7 @@ void model_add_point(Tmodel* model, double X, double Y, double Z){
 #if ( DEBUG )
 
 		fprintf(stderr,"----->DEBUG Which point: %i \n", model->nb_points);
-		fprintf(stderr,"----->DEBUG @ of point in tab_point %x \n", model->tab_points[model->nb_points-1]);
+		fprintf(stderr,"----->DEBUG @ of point in tab_point %x \n", (unsigned int) model->tab_points[model->nb_points-1]);
 		// Print the field of the structure Tpoint	
 		fprintf(stderr,"----->DEBUG Point X: %lf \n", model->tab_points[model->nb_points-1]->x);
 		fprintf(stderr,"----->DEBUG Point Y: %lf \n", model->tab_points[model->nb_points-1]->y);
@@ -98,7 +98,7 @@ void model_add_triangle(Tmodel* model, Tpoint* p1, Tpoint* p2, Tpoint* p3){
 
 
 	fprintf(stderr,"----->DEBUG How many triangless: %i \n", model->nb_triangles);
-	fprintf(stderr,"----->DEBUG @ of triangle in tab_triangle %x \n", model->tab_triangles[0]);
+	fprintf(stderr,"----->DEBUG @ of triangle in tab_triangle %x \n", (unsigned int) model->tab_triangles[0]);
 	// Print the field of the structure Ttriangle	
 	fprintf(stderr,"----->DEBUG triange : %lf \n", model->tab_triangles[model->nb_triangles-1]->p1->x);
 	fprintf(stderr,"----->DEBUG triange : %lf \n", model->tab_triangles[model->nb_triangles-1]->p1->y);

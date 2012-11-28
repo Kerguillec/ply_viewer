@@ -15,9 +15,10 @@ Tpoint* point_malloc(double x, double y, double z){
 	tmp = (Tpoint*) malloc (sizeof(Tpoint));
 	tmp->x = x;
 	tmp->y = y;
-	tmp->z = z;
+	tmp->z = z;	// FIXME ajouter R,G,B ...
 	return tmp;
 }
+
 /*************************
 This part show you the data 
 Exit:
