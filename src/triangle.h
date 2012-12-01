@@ -5,24 +5,25 @@
 
 
 typedef struct {
-
+	
+	int a;
 	Tpoint* p1 ;
 	Tpoint* p2 ;
 	Tpoint* p3 ;
-
-	// int is_colored ;     ce triangle a-t-il une couleur specifique ? si 0 -> voir couleur des points, sinon, aplliquer couleur ci-dessous
-	//
-	// unsigned char R ;
-	// unsigned char G ;
-	// unsigned char B ;
+	
+	int is_colored ;   
+	
+	unsigned char R ;
+	unsigned char G ;
+	unsigned char B ;
 
 
 } Ttriangle ;
 
-Ttriangle* triangle_malloc(Tpoint* point1, Tpoint* point2, Tpoint* point3);  // FIXME  par default, is_colored = 0, R,G,B initialises a 255,255,255 
-// FIXME Ttriangle* triangle_mallocRGB ( Tpoint*, Tpoint* Tpoint* unsigned char, unsigned char unsigned_char )  is_colored = 1
+Ttriangle* triangle_malloc(Tpoint* point1, Tpoint* point2, Tpoint* point3);   
+Ttriangle* triangle_mallocRGB(Tpoint* point1, Tpoint* point2, Tpoint* point3, unsigned char R, unsigned char G, unsigned char B);
 
-void debug_Tcoordinates(Ttriangle* A);		// FIXME renommer en void triangle_print ( Ttriangle*, FILE* stream )
+void triangle_print(Ttriangle* A, FILE* stream);		
 
 void triangle_free(Ttriangle*);
 

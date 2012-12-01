@@ -98,7 +98,7 @@ void model_add_triangle(Tmodel* model, Tpoint* p1, Tpoint* p2, Tpoint* p3){
 
 
 	fprintf(stderr,"----->DEBUG How many triangless: %i \n", model->nb_triangles);
-	fprintf(stderr,"----->DEBUG @ of triangle in tab_triangle %x \n", (unsigned int) model->tab_triangles[0]);
+	fprintf(stderr,"----->DEBUG @ of triangle in tab_triangle %x \n", (unsigned int) model->tab_triangles[0]); //FIXME Wpointer to int cast warning ?
 	// Print the field of the structure Ttriangle	
 	fprintf(stderr,"----->DEBUG triange : %lf \n", model->tab_triangles[model->nb_triangles-1]->p1->x);
 	fprintf(stderr,"----->DEBUG triange : %lf \n", model->tab_triangles[model->nb_triangles-1]->p1->y);
@@ -119,24 +119,24 @@ void model_set_posmat(Tmodel* model, Tmatrix* matrix) {
 
 // Define the matrix position for our model
 
-		model->pos->wi=matrix->wi;
+	model->pos->wi=matrix->wi;
         model->pos->xi=matrix->xi;
         model->pos->yi=matrix->yi;
         model->pos->zi=matrix->zi;
 	   
-	    model->pos->wj=matrix->wj;
+	model->pos->wj=matrix->wj;
         model->pos->xj=matrix->xj;
         model->pos->yj=matrix->yj;
         model->pos->zj=matrix->zj;
 		
 		
-		model->pos->wk=matrix->wk;
+	model->pos->wk=matrix->wk;
         model->pos->xk=matrix->xk;
         model->pos->yk=matrix->yk;
         model->pos->zk=matrix->zk;
 		
 		
-		model->pos->wl=matrix->wl;
+	model->pos->wl=matrix->wl;
         model->pos->xl=matrix->xl;
         model->pos->yl=matrix->yl;
         model->pos->zl=matrix->zl;
@@ -166,24 +166,24 @@ fprintf(stderr," Debug Position Matrix : %lf ",model->pos->zl);
 
 void model_mult_posmat(Tmodel* model, Tmatrix* matrix) {
 
-		model->pos->wi=(model->pos->wi)*(matrix->wi);
+	model->pos->wi*=(matrix->wi);
         model->pos->xi=(model->pos->wi)*(matrix->xi);
         model->pos->yi=(model->pos->wi)*(matrix->yi);
         model->pos->zi=(model->pos->wi)*(matrix->zi);
 	   
-	    model->pos->wj=(model->pos->wj)*(matrix->wj);
+	model->pos->wj=(model->pos->wj)*(matrix->wj);
         model->pos->xj=(model->pos->wj)*(matrix->xj);
         model->pos->yj=(model->pos->wj)*(matrix->yj);
         model->pos->zj=(model->pos->wj)*(matrix->zj);
 		
 		
-		model->pos->wk=(model->pos->wk)*(matrix->wk);
+	model->pos->wk=(model->pos->wk)*(matrix->wk);
         model->pos->xk=(model->pos->wk)*(matrix->xk);
         model->pos->yk=(model->pos->wk)*(matrix->yk);
         model->pos->zk=(model->pos->wk)*(matrix->zk);
 		
 		
-		model->pos->wl=(model->pos->wl)*(matrix->wl);
+	model->pos->wl=(model->pos->wl)*(matrix->wl);
         model->pos->xl=(model->pos->wl)*(matrix->xl);
         model->pos->yl=(model->pos->wl)*(matrix->yl);
         model->pos->zl=(model->pos->wl)*(matrix->zl);

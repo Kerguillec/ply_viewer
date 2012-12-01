@@ -13,20 +13,28 @@ int main ( int argc, char** argv, char** envv ) {
 	Tpoint* points3;
 	
 	points1 = point_malloc(1,1,1);
-	debug_Pcoordinates(points1->x, points1->y, points1->z);	
+	point_print(points1, stderr);	
 	
 	points2 = point_malloc(2,2,2);
-	debug_Pcoordinates(points2->x, points2->y, points2->z);	
+	point_print(points2, stderr);	
 
 	points3 = point_malloc(5,3,2);
-	debug_Pcoordinates(points3->x, points3->y, points3->z);	
+	point_print(points3, stderr);	
+	
+	points3 = point_mallocRGB(5,3,2,64,246,247);
+	point_print(points3, stderr);	
 
 	Ttriangle* triangle;
+	Ttriangle* triangle1;
 	
 	triangle = triangle_malloc(points1, points2, points3);
-	debug_Tcoordinates(triangle);
+	triangle_print(triangle,stderr);
 	
+	// With coloration: 
+	triangle1 = triangle_mallocRGB(points1, points2, points3, 54, 23, 245);
+	triangle_print(triangle1,stderr);
 	
+/*	
 	Tmodel* test;
 	
 	test = model_malloc() ;
@@ -53,7 +61,7 @@ int main ( int argc, char** argv, char** envv ) {
 	model_set_posmat(test,matrix);	
 		
 		
-		
+*/		
 	
 	point_free(points1);
 	point_free(points2);

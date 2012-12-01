@@ -24,14 +24,17 @@ Tmatrix* matrix_malloc( double wi, double xi, double yi, double zi,
         tmp->xi=xi;
         tmp->yi=yi;
         tmp->zi=zi;
+
 	tmp->wj=wj;
         tmp->xj=xj;
         tmp->yj=yj;
         tmp->zj=zj;
+
 	tmp->wk=wk;
         tmp->xk=xk;
         tmp->yk=yk;
         tmp->zk=zk;
+
 	tmp->wl=wl;
         tmp->xl=xl;
         tmp->yl=yl;

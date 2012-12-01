@@ -2,7 +2,7 @@
 #define MATRIX_H
 
 typedef struct {
-
+	//TODO
 	// version seb :
 	//
 	//  int  lines ;
