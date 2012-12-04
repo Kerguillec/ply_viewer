@@ -4,11 +4,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
+#include "rigidobject.h"
 
 double* allocmem(int size_type);
 
 
-int ply_load(char* filename);
+int rigidobject_loadply(Trigidobject* object, char* filename);
 
 #endif

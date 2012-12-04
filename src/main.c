@@ -4,7 +4,7 @@
 #include "paul_ply.h"
 #include "point.h"
 #include "triangle.h"
-#include "model.h"
+#include "rigidobject.h"
 int main ( int argc, char** argv, char** envv ) {
  
 	Trigidobject*	lapin ;

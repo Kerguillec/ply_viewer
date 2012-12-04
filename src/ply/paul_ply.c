@@ -9,7 +9,7 @@ Paul Kerguillec Jully 2012.
 #include "paul_ply.h"
 
 
-int ply_load (char* filename {
+int rigidobject_loadply (Trigidobject* object, char* filename) {
 
 	PlyFile* file ;
 
@@ -28,10 +28,10 @@ int ply_load (char* filename {
 	double* Z ;
 	int nb_points ;
 
-	if(var_env == NULL)
+	if(filename == NULL)
 		fprintf(stderr,"Error: Precise the file to examine");
 	else{
-	file = ply_open_for_reading( var_env, &nelems, &elem_names, &file_type, &version ) ;
+	file = ply_open_for_reading( filename, &nelems, &elem_names, &file_type, &version ) ;
 	
 
 	switch (file_type) {
@@ -93,7 +93,7 @@ int ply_load (char* filename {
 			                ply_get_element(file, X ) ;
 				}
 
-	/*			if ( strcmp( prop[j]->name,"y" ) == 0 ) {
+				if ( strcmp( prop[j]->name,"y" ) == 0 ) {
 					prop[j]->internal_type = PLY_DOUBLE ;	
 					ply_get_element_setup(file,elem_names[i], 1, prop[j] ) ;
 			                ply_get_element(file, Y ) ;
@@ -105,7 +105,7 @@ int ply_load (char* filename {
 					ply_get_element_setup(file,elem_names[i], 1, prop[j] ) ;
 			                ply_get_element(file, Z ) ;
 				}
-*/
+
 			}
 	
 		}
