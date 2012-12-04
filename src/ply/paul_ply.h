@@ -9,6 +9,6 @@
 double* allocmem(int size_type);
 
 
-int ply_load(char* var_env);
+int ply_load(char* filename);
 
 #endif

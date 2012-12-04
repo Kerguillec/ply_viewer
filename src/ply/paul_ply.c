@@ -9,7 +9,7 @@ Paul Kerguillec Jully 2012.
 #include "paul_ply.h"
 
 
-int ply_load (char* var_env) {
+int ply_load (char* filename {
 
 	PlyFile* file ;
 
