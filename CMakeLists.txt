@@ -41,12 +41,13 @@ endforeach()
 ### Set include directories 
         
 include_directories( "${CMAKE_CURRENT_SOURCE_DIR}/src"
+		     "${CMAKE_CURRENT_SOURCE_DIR}/src/ply"
 	             "${CMAKE_CURRENT_BINARY_DIR}" )
 
 ### File Lists
 
-file( GLOB src "src/*.cpp" "src/*.c" )
-file( GLOB hdr "src/*.h*")
+file( GLOB src "src/*.c*" "src/ply/*.c*" )
+file( GLOB hdr "src/*.h*" "src/ply/*.h*" )
 
 
 ### Targets
