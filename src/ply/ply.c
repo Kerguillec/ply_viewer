@@ -1530,7 +1530,7 @@ void ascii_get_element(PlyFile *plyfile, char *elem_ptr)
 
     if (prop->is_list) { /* a list */
 
-      printf("list\n") ;
+//      printf("list\n") ;
 
       /* get and store the number of items in the list */
       get_ascii_item (words[which_word++], prop->count_external,
@@ -1570,7 +1570,7 @@ void ascii_get_element(PlyFile *plyfile, char *elem_ptr)
 
     }
     else {              /* not a list */
-    printf("not list\n");
+//    printf("not list\n");
       get_ascii_item (words[which_word++], prop->external_type,
                       &int_val, &uint_val, &double_val);
       if (store_it) {

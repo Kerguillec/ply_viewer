@@ -7,8 +7,8 @@
 #include "model.h"
 int main ( int argc, char** argv, char** envv ) {
  
-//	ply_load(argv[1]);
-	Tpoint* points1;
+	ply_load(argv[1]);
+/*      Tpoint* points1;
 	Tpoint* points2;
 	Tpoint* points3;
 	
@@ -33,7 +33,7 @@ int main ( int argc, char** argv, char** envv ) {
 	// With coloration: 
 	triangle1 = triangle_mallocRGB(points1, points2, points3, 54, 23, 245);
 	triangle_print(triangle1,stderr);
-	
+*/
 /*	
 	Tmodel* test;
 	
@@ -62,13 +62,13 @@ int main ( int argc, char** argv, char** envv ) {
 		
 		
 */		
-	
+/*	
 	point_free(points1);
 	point_free(points2);
 	point_free(points3);
 
 	triangle_free(triangle);
-
+*/
 
 	return 0 ;
 }
