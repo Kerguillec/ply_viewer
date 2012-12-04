@@ -11,7 +11,8 @@ typedef struct {
 	Tpoint* p2 ;
 	Tpoint* p3 ;
 	
-	int is_colored ;   
+	int is_colored ;  // if 0, the color of the points are used.
+	                  // if 1, use the color underneath
 	
 	unsigned char R ;
 	unsigned char G ;

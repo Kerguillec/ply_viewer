@@ -20,6 +20,8 @@ Tmodel* model_malloc(){
 	tmp = (Tmodel*) malloc(sizeof (Tmodel) );
 
 	tmp->tab_points = (Tpoint**) malloc ( MODEL_SIZE * sizeof ( Tpoint* ) ) ;
+	// TODO tester si le malloc renvoie NULL a chaque malloc
+	
 	tmp->nb_points = 0 ;
 
 	tmp->tab_triangles = ( Ttriangle** ) malloc ( MODEL_SIZE * sizeof ( Ttriangle* ) ) ;
