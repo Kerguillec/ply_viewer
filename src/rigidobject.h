@@ -9,10 +9,10 @@
 
 typedef struct Srigidobject {
 
-	Tpoint** tab_points;
+	Tpoint* tab_points;
 	int nb_points;
 	
-	Ttriangle** tab_triangles;
+	Ttriangle* tab_triangles;
 	int nb_triangles ;
 
 	Tmatrix* pos ;			// Position matrix

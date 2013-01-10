@@ -8,7 +8,6 @@ Paul Kerguillec Jully 2012.
 #include "ply.h"
 #include "paul_ply.h"
 
-
 int rigidobject_loadply (Trigidobject* object, char* filename) {
 
 	PlyFile* file ;
@@ -20,17 +19,25 @@ int rigidobject_loadply (Trigidobject* object, char* filename) {
 	
 	int file_type ;
 	char filetypename[100] ;
-
 	float version ;
 
-	double* X ;
-	double* Y ;
-	double* Z ;
-	int nb_points ;
+PlyProperty vertexProps[] = {
+	{ "x", PLY_FLOAT, PLY_DOUBLE, offsetof( struct _Tpoint, x ), 0, 0, 0, 0 },
+	{ "y", PLY_FLOAT, PLY_DOUBLE, offsetof( struct _Tpoint, y ), 0, 0, 0, 0 },
+	{ "z", PLY_FLOAT, PLY_DOUBLE, offsetof( struct _Tpoint, z ), 0, 0, 0, 0 }
+} ;
 
-	if(filename == NULL)
+
+
+
+
+
+	if(filename == NULL) {
 		fprintf(stderr,"Error: Precise the file to examine");
-	else{
+		return -1 ;
+	}
+
+
 	file = ply_open_for_reading( filename, &nelems, &elem_names, &file_type, &version ) ;
 	
 
@@ -55,8 +62,6 @@ int rigidobject_loadply (Trigidobject* object, char* filename) {
 	printf("version : %f\n", version ) ;
 	printf("read %d elements : \n", nelems ) ;
 	
-
-
 	for ( i=0; i<nelems; i++ ) {
 		printf("Element -> %s \n", elem_names[i] ) ;
 
@@ -66,60 +71,51 @@ int rigidobject_loadply (Trigidobject* object, char* filename) {
 
 		prop = ply_get_element_description( file, elem_names[i], &nb, &nprops ) ;
 		
-		printf("        -> %d occurences \n", nb ) ;
-		printf("        -> %d properties \n", nprops ) ;
+		printf(" -> %d occurences \n", nb ) ;
+		printf(" -> %d properties \n", nprops ) ;
 		
 		if ( strcmp( elem_names[i], "vertex" ) == 0 ) {
 
-			nb_points = nb ;
-			X = (double*) malloc ( nb*sizeof(double) ) ;
-			Y = (double*) malloc ( nb*sizeof(double) ) ;
-			Z = (double*) malloc ( nb*sizeof(double) ) ;
+			object->nb_points = nb ;
+			object->tab_points = malloc ( object->nb_points * sizeof ( Tpoint ) ) ;
 
-
-		}
+			for (j=0; j<nprops; j++ ) {
 		
-		for (j=0; j<nprops; j++ ) {
-		
-			printf("		Name: %s \n", prop[j]->name ) ;
+				printf("    -> Name: %s \n", prop[j]->name ) ;
 	
-			if ( strcmp( elem_names[i], "vertex" ) == 0 ) {
-
-
 				if ( strcmp( prop[j]->name,"x" ) == 0 ) {
-					printf("x\n") ;
-					prop[j]->internal_type = PLY_DOUBLE ;	
-					ply_get_element_setup(file,elem_names[i], 1, prop[j] ) ;
-			                ply_get_element(file, X ) ;
+					ply_get_property( file, "vertex", &vertexProps[0] );
+
 				}
 
 				if ( strcmp( prop[j]->name,"y" ) == 0 ) {
-					prop[j]->internal_type = PLY_DOUBLE ;	
-					ply_get_element_setup(file,elem_names[i], 1, prop[j] ) ;
-			                ply_get_element(file, Y ) ;
+					ply_get_property( file, "vertex", &vertexProps[1] );
 				}
 
 
 				if ( strcmp( prop[j]->name,"z" ) == 0 ) {
-					prop[j]->internal_type = PLY_DOUBLE ;	
-					ply_get_element_setup(file,elem_names[i], 1, prop[j] ) ;
-			                ply_get_element(file, Z ) ;
+					ply_get_property( file, "vertex", &vertexProps[2] );
 				}
 
 			}
-	
+
+		
+			for (j=0; j<object->nb_points; j++ )
+				ply_get_element( file, object->tab_points ) ;
+
+
 		}
 
+		if ( strcmp( elem_names[i], "triangle" ) == 0 ) {
+
+		// TODO
+
+
+		}
+
+
+
 	}
-}
 
-//	for (i=0; i<nb_points; i++) 
-//		printf("%lf %lf %lf \n", X[i], Y[i], Z[i] ) ;
-
-
-	free(X) ;
-	free(Y) ;
-	free(Z) ;
-
-	return 0;
+	return 0 ;
 }

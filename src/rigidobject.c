@@ -19,12 +19,12 @@ Trigidobject* rigidobject_malloc(){
 	Trigidobject* tmp;
 	tmp = (Trigidobject*) malloc(sizeof (Trigidobject) );
 
-	tmp->tab_points = (Tpoint**) malloc ( MODEL_SIZE * sizeof ( Tpoint* ) ) ;
+	tmp->tab_points = (Tpoint*) malloc ( MODEL_SIZE * sizeof ( Tpoint ) ) ;
 	// TODO tester si le malloc renvoie NULL a chaque malloc
 	
 	tmp->nb_points = 0 ;
 
-	tmp->tab_triangles = ( Ttriangle** ) malloc ( MODEL_SIZE * sizeof ( Ttriangle* ) ) ;
+	tmp->tab_triangles = ( Ttriangle* ) malloc ( MODEL_SIZE * sizeof ( Ttriangle ) ) ;
 	tmp->nb_triangles = 0 ;
 
 	tmp->pos = matrix_malloc ( 1.0, 0.0, 0.0, 0.0,  
@@ -50,21 +50,20 @@ void rigidobject_add_point(Trigidobject* rigidobject, double X, double Y, double
         
 	} else {
 
-		Tpoint* point = point_malloc(X,Y,Z);
-		
 		//Save the location of the pointer "point" into the table "tab_points" 
 		
-		rigidobject->tab_points[rigidobject->nb_points] = point;
+		rigidobject->tab_points[rigidobject->nb_points].x = X ;
+		rigidobject->tab_points[rigidobject->nb_points].y = Y ;
+		rigidobject->tab_points[rigidobject->nb_points].z = Z ;
 		rigidobject->nb_points++;
 
 #if ( DEBUG )
 
 		fprintf(stderr,"----->DEBUG Which point: %i \n", rigidobject->nb_points);
-		fprintf(stderr,"----->DEBUG @ of point in tab_point %x \n", (unsigned int) rigidobject->tab_points[rigidobject->nb_points-1]);
 		// Print the field of the structure Tpoint	
-		fprintf(stderr,"----->DEBUG Point X: %lf \n", rigidobject->tab_points[rigidobject->nb_points-1]->x);
-		fprintf(stderr,"----->DEBUG Point Y: %lf \n", rigidobject->tab_points[rigidobject->nb_points-1]->y);
-		fprintf(stderr,"----->DEBUG Point Z: %lf \n\n", rigidobject->tab_points[rigidobject->nb_points-1]->z);
+		fprintf(stderr,"----->DEBUG Point X: %lf \n", rigidobject->tab_points[rigidobject->nb_points-1].x);
+		fprintf(stderr,"----->DEBUG Point Y: %lf \n", rigidobject->tab_points[rigidobject->nb_points-1].y);
+		fprintf(stderr,"----->DEBUG Point Z: %lf \n\n", rigidobject->tab_points[rigidobject->nb_points-1].z);
 
 #endif
 
@@ -74,7 +73,7 @@ void rigidobject_add_point(Trigidobject* rigidobject, double X, double Y, double
 
 
 
-
+/*
 
 void rigidobject_add_triangle(Trigidobject* rigidobject, Tpoint* p1, Tpoint* p2, Tpoint* p3){
 
@@ -102,21 +101,21 @@ void rigidobject_add_triangle(Trigidobject* rigidobject, Tpoint* p1, Tpoint* p2,
 	fprintf(stderr,"----->DEBUG How many triangless: %i \n", rigidobject->nb_triangles);
 	fprintf(stderr,"----->DEBUG @ of triangle in tab_triangle %x \n", (unsigned int) rigidobject->tab_triangles[0]); //FIXME Wpointer to int cast warning ?
 	// Print the field of the structure Ttriangle	
-	fprintf(stderr,"----->DEBUG triange : %lf \n", rigidobject->tab_triangles[rigidobject->nb_triangles-1]->p1->x);
-	fprintf(stderr,"----->DEBUG triange : %lf \n", rigidobject->tab_triangles[rigidobject->nb_triangles-1]->p1->y);
-	fprintf(stderr,"----->DEBUG triange : %lf \n\n", rigidobject->tab_triangles[rigidobject->nb_triangles-1]->p1->z);
+	fprintf(stderr,"----->DEBUG triange : %lf \n", rigidobject->tab_triangles[rigidobject->nb_triangles-1].p1.x);
+	fprintf(stderr,"----->DEBUG triange : %lf \n", rigidobject->tab_triangles[rigidobject->nb_triangles-1].p1.y);
+	fprintf(stderr,"----->DEBUG triange : %lf \n\n", rigidobject->tab_triangles[rigidobject->nb_triangles-1].p1.z);
 
-	fprintf(stderr,"----->DEBUG triange : %lf \n", rigidobject->tab_triangles[rigidobject->nb_triangles-1]->p2->x);
-	fprintf(stderr,"----->DEBUG triange : %lf \n", rigidobject->tab_triangles[rigidobject->nb_triangles-1]->p2->y);
-	fprintf(stderr,"----->DEBUG triange : %lf \n\n", rigidobject->tab_triangles[rigidobject->nb_triangles-1]->p2->z);
+	fprintf(stderr,"----->DEBUG triange : %lf \n", rigidobject->tab_triangles[rigidobject->nb_triangles-1].p2.x);
+	fprintf(stderr,"----->DEBUG triange : %lf \n", rigidobject->tab_triangles[rigidobject->nb_triangles-1].p2.y);
+	fprintf(stderr,"----->DEBUG triange : %lf \n\n", rigidobject->tab_triangles[rigidobject->nb_triangles-1].p2.z);
 
-	fprintf(stderr,"----->DEBUG triange : %lf \n", rigidobject->tab_triangles[rigidobject->nb_triangles-1]->p3->x);
-	fprintf(stderr,"----->DEBUG triange : %lf \n", rigidobject->tab_triangles[rigidobject->nb_triangles-1]->p3->y);
-	fprintf(stderr,"----->DEBUG triange : %lf \n\n", rigidobject->tab_triangles[rigidobject->nb_triangles-1]->p3->z);
+	fprintf(stderr,"----->DEBUG triange : %lf \n", rigidobject->tab_triangles[rigidobject->nb_triangles-1].p3.x);
+	fprintf(stderr,"----->DEBUG triange : %lf \n", rigidobject->tab_triangles[rigidobject->nb_triangles-1].p3.y);
+	fprintf(stderr,"----->DEBUG triange : %lf \n\n", rigidobject->tab_triangles[rigidobject->nb_triangles-1].p3.z);
 #endif
 	}
 }
-
+*/
 void rigidobject_set_posmat(Trigidobject* rigidobject, Tmatrix* matrix) {
 
 // Define the matrix position for our rigidobject
@@ -192,7 +191,13 @@ void rigidobject_mult_posmat(Trigidobject* rigidobject, Tmatrix* matrix) {
 
 }
 void rigidobject_print(Trigidobject* object){
-//TODO
+	int i ;
+	for ( i=0; i<object->nb_points; i++ ) {
+
+		printf ( "%lf %lf %lf \n", object->tab_points[i].x,
+					   object->tab_points[i].y,
+					   object->tab_points[i].z  ) ;
+	}
 }
 
 void rigidobject_free(Trigidobject* object){

@@ -3,7 +3,7 @@
 
 #include "matrix.h"
 
-typedef struct {
+typedef struct _Tpoint {
 
 	double x ;
 	double y ;
