@@ -101,7 +101,7 @@ PlyProperty vertexProps[] = {
 
 		
 			for (j=0; j<object->nb_points; j++ )
-				ply_get_element( file, object->tab_points ) ;
+				ply_get_element( file, &(object->tab_points[j]) ) ;
 
 
 		}

@@ -5,19 +5,19 @@
 #include "triangle.h"
 #include "matrix.h"
 
-#define MODEL_SIZE 1000 
+#define MODEL_SIZE 10000 
 
 typedef struct Srigidobject {
 
 	Tpoint* tab_points;
 	int nb_points;
+	int max_points ;
 	
 	Ttriangle* tab_triangles;
 	int nb_triangles ;
+	int max_triangles ;
 
 	Tmatrix* pos ;			// Position matrix
-
-	struct Srigidobject* next ;		// pointer to the next model structure
 
 } Trigidobject ;
 

@@ -20,55 +20,39 @@ Trigidobject* rigidobject_malloc(){
 	tmp = (Trigidobject*) malloc(sizeof (Trigidobject) );
 
 	tmp->tab_points = (Tpoint*) malloc ( MODEL_SIZE * sizeof ( Tpoint ) ) ;
-	// TODO tester si le malloc renvoie NULL a chaque malloc
-	
-	tmp->nb_points = 0 ;
+	if ( tmp->tab_points == NULL ) {
+		fprintf( stderr, "rigidobject.c - Erreur allocation memoire \n" ) ;
+		exit(0) ;
+	}
+
 
 	tmp->tab_triangles = ( Ttriangle* ) malloc ( MODEL_SIZE * sizeof ( Ttriangle ) ) ;
+	if ( tmp->tab_triangles == NULL ) {
+		fprintf( stderr, "rigidobject.c - Erreur allocation memoire \n" ) ;
+	}
+
+	tmp->nb_points = 0 ;
 	tmp->nb_triangles = 0 ;
+
+	tmp->max_points = MODEL_SIZE ;
+	tmp->max_triangles = MODEL_SIZE ;
 
 	tmp->pos = matrix_malloc ( 1.0, 0.0, 0.0, 0.0,  
 	                           0.0, 1.0, 0.0, 0.0, 
 				   0.0, 0.0, 1.0, 0.0,
 				   0.0, 0.0, 0.0, 1.0 ) ; 
-
-	tmp->next = NULL ;
-
 	return tmp;
 }
 
 void rigidobject_add_point(Trigidobject* rigidobject, double X, double Y, double Z){
 
-	// It verify if the length of the table is enough, if isn't the case that means we have to realloc. 
-        
-	if( rigidobject->nb_points == MODEL_SIZE ) {
-                
-		if ( rigidobject->next == NULL )
-			rigidobject->next = rigidobject_malloc() ;
-
-		rigidobject_add_point ( rigidobject->next, X, Y, Z ) ;
-        
-	} else {
-
-		//Save the location of the pointer "point" into the table "tab_points" 
+		// FIXME add size test here
 		
 		rigidobject->tab_points[rigidobject->nb_points].x = X ;
 		rigidobject->tab_points[rigidobject->nb_points].y = Y ;
 		rigidobject->tab_points[rigidobject->nb_points].z = Z ;
 		rigidobject->nb_points++;
 
-#if ( DEBUG )
-
-		fprintf(stderr,"----->DEBUG Which point: %i \n", rigidobject->nb_points);
-		// Print the field of the structure Tpoint	
-		fprintf(stderr,"----->DEBUG Point X: %lf \n", rigidobject->tab_points[rigidobject->nb_points-1].x);
-		fprintf(stderr,"----->DEBUG Point Y: %lf \n", rigidobject->tab_points[rigidobject->nb_points-1].y);
-		fprintf(stderr,"----->DEBUG Point Z: %lf \n\n", rigidobject->tab_points[rigidobject->nb_points-1].z);
-
-#endif
-
-
-	}
 }
 
 
@@ -192,8 +176,7 @@ void rigidobject_mult_posmat(Trigidobject* rigidobject, Tmatrix* matrix) {
 }
 void rigidobject_print(Trigidobject* object){
 	int i ;
-	for ( i=0; i<object->nb_points; i++ ) {
-
+	for ( i=0; i<10; i++ ) {
 		printf ( "%lf %lf %lf \n", object->tab_points[i].x,
 					   object->tab_points[i].y,
 					   object->tab_points[i].z  ) ;
@@ -201,5 +184,5 @@ void rigidobject_print(Trigidobject* object){
 }
 
 void rigidobject_free(Trigidobject* object){
- free(object); //FIXME
+	 free(object); 
 }

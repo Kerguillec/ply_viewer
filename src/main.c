@@ -15,7 +15,7 @@ int main ( int argc, char** argv, char** envv ) {
 
 	rigidobject_loadply( lapin, argv[1] ) ;
 
-	//rigidobject_print ( lapin ) ;
+	rigidobject_print ( lapin ) ;
 
 	rigidobject_free ( lapin ) ;
 
