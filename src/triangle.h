@@ -6,12 +6,9 @@
 
 typedef struct {
 	
-	int a;
-	Tpoint* p1 ;
-	Tpoint* p2 ;
-	Tpoint* p3 ;
-	
-	int is_colored ;  // if 0, the color of the points are used.
+	int  nb_points ;
+	int* points ;
+	int  is_colored ;  // if 0, the color of the points are used.
 	                  // if 1, use the color underneath
 	
 	unsigned char R ;
@@ -21,8 +18,8 @@ typedef struct {
 
 } Ttriangle ;
 
-Ttriangle* triangle_malloc(Tpoint* point1, Tpoint* point2, Tpoint* point3);   
-Ttriangle* triangle_mallocRGB(Tpoint* point1, Tpoint* point2, Tpoint* point3, unsigned char R, unsigned char G, unsigned char B);
+Ttriangle* triangle_malloc( int p1, int p2, int p3);   
+Ttriangle* triangle_mallocRGB( int p1, int p2, int p3, unsigned char R, unsigned char G, unsigned char B);
 
 void triangle_print(Ttriangle* A, FILE* stream);		
 

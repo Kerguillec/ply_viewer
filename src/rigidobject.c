@@ -180,6 +180,9 @@ void rigidobject_print(Trigidobject* object){
 		printf ( "%lf %lf %lf \n", object->tab_points[i].x,
 					   object->tab_points[i].y,
 					   object->tab_points[i].z  ) ;
+		printf ( "%i %i %i \n",    object->tab_triangles[i].points[0],
+					   object->tab_triangles[i].points[1],
+					   object->tab_triangles[i].points[2]  ) ;
 	}
 }
 

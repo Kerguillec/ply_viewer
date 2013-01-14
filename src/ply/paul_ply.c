@@ -21,13 +21,17 @@ int rigidobject_loadply (Trigidobject* object, char* filename) {
 	char filetypename[100] ;
 	float version ;
 
-PlyProperty vertexProps[] = {
-	{ "x", PLY_FLOAT, PLY_DOUBLE, offsetof( struct _Tpoint, x ), 0, 0, 0, 0 },
-	{ "y", PLY_FLOAT, PLY_DOUBLE, offsetof( struct _Tpoint, y ), 0, 0, 0, 0 },
-	{ "z", PLY_FLOAT, PLY_DOUBLE, offsetof( struct _Tpoint, z ), 0, 0, 0, 0 }
-} ;
 
+	PlyProperty vertexProps[] = {
+		{ "x", PLY_FLOAT, PLY_DOUBLE, offsetof( struct _Tpoint, x ), 0, 0, 0, 0 },
+		{ "y", PLY_FLOAT, PLY_DOUBLE, offsetof( struct _Tpoint, y ), 0, 0, 0, 0 },
+		{ "z", PLY_FLOAT, PLY_DOUBLE, offsetof( struct _Tpoint, z ), 0, 0, 0, 0 }
+	} ;
 
+	
+	PlyProperty faceProps[] = {
+		{ "vertex_indices", PLY_INT, PLY_INT, offsetof( Ttriangle, points ), 1, PLY_UCHAR, PLY_UCHAR, offsetof( Ttriangle, nb_points ) }
+	};
 
 
 
@@ -75,47 +79,43 @@ PlyProperty vertexProps[] = {
 		printf(" -> %d properties \n", nprops ) ;
 		
 		if ( strcmp( elem_names[i], "vertex" ) == 0 ) {
-
 			object->nb_points = nb ;
 			object->tab_points = malloc ( object->nb_points * sizeof ( Tpoint ) ) ;
-
 			for (j=0; j<nprops; j++ ) {
-		
 				printf("    -> Name: %s \n", prop[j]->name ) ;
-	
 				if ( strcmp( prop[j]->name,"x" ) == 0 ) {
 					ply_get_property( file, "vertex", &vertexProps[0] );
 
 				}
-
 				if ( strcmp( prop[j]->name,"y" ) == 0 ) {
 					ply_get_property( file, "vertex", &vertexProps[1] );
 				}
-
-
 				if ( strcmp( prop[j]->name,"z" ) == 0 ) {
 					ply_get_property( file, "vertex", &vertexProps[2] );
 				}
-
 			}
 
-		
 			for (j=0; j<object->nb_points; j++ )
 				ply_get_element( file, &(object->tab_points[j]) ) ;
-
-
 		}
 
-		if ( strcmp( elem_names[i], "triangle" ) == 0 ) {
-
-		// TODO
-
-
+		if ( strcmp( elem_names[i], "face" ) == 0 ) {
+			object->nb_triangles = nb ;
+			object->tab_triangles = malloc ( object->nb_triangles * sizeof ( Ttriangle ) ) ;
+		
+			for ( j=0; j<nprops; j++ ) {
+				printf("    -> Name: %s \n", prop[j]->name);
+				if ( strcmp( prop[j]->name,"vertex_indices")==0 ) 
+					 ply_get_property( file, "face", &faceProps[0] );	
+				
+			}
+	
+			for (j=0; j<object->nb_triangles; j++ )
+				ply_get_element( file, &(object->tab_triangles[j]) ) ;
+		
 		}
-
-
-
 	}
-
+	
 	return 0 ;
+
 }
