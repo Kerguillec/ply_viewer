@@ -88,37 +88,52 @@ int initGL(GLvoid)
     return True;
 }
 
+
 /* Here goes our drawing code */
 int drawGLScene(Trigidobject* object)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
-    glTranslatef(-1.0f, -1.0f, -3.0f); /* Part de 0.0.0 et recule de 1.5 sur les x, ne bouge pas les y et recule de 6 sur les z */
-   /* glRotatef(rotTri, 0.0f, 1.0f, 0.0f); /* Effectue rotation 0.15f */ 
+    glTranslatef(0.0f, 0.0f, -0.5f); /* Part de 0.0.0 et recule de 1.5 sur les x, ne bouge pas les y et recule de 6 sur les z */
+   glRotatef(rotTri, 0.0f, 1.0f, -0.0f); /* Effectue rotation 0.15f */ 
     
     fprintf(stderr,"debug\n");
     int i=0;
     
     for(i=0; i<object->nb_points; i++)
     {  
-		 fprintf(stderr,"\n POINTS : !!!!!!! %lf \n ",object->tab_points[i].x);
+		/* fprintf(stderr,"\n POINTS : !!!!!!! %lf \n ",object->tab_points[i].x);*/
+
+		
+		glBegin(GL_TRIANGLES);
 		 
-		  fprintf(stderr,"debug \n");
-		
-		glBegin(GL_POINTS);
-		
-		 fprintf(stderr,"debug \n");
-		glColor3f(1.0f,1.0f,1.0f);
-		
-		 fprintf(stderr,"debug 4\n");
+		glColor3f(1.0f,0.0f,1.0f);
+					
+glNormal3(object->tab_triangles[i].points[0], object->tab_triangles[i].points[1], object-> tab_triangles[i].points[2]);
+	
+
  glVertex3f(object->tab_points[i].x, 
  object->tab_points[i].y, 
  object->tab_points[i].z);
-							
+ 
+ /*glNormal3(object->tab_triangles[i+2].points[0], object->tab_triangles[i+2].points[1], object-> tab_triangles[i+2].points[2]);*/
+  glVertex3f(object->tab_points[i+1].x, 
+ object->tab_points[i+1].y, 
+ object->tab_points[i+1].z);
+ 
+ /*glNormal3(object->tab_triangles[i+4].points[0], object->tab_triangles[i+4].points[1], object-> tab_triangles[i+4].points[2]);*/
+ glVertex3f(object->tab_points[i+2].x, 
+ object->tab_points[i+2].y, 
+ object->tab_points[i+2].z);
+ 
+ 
+					
 						
 		glEnd();					
-	}						
-		
+	}
+	rotTri += 0.5f;
+    rotQuad -= 0.5f;						
+	
   /* GLfloat coord[]=
  /*   { -1.0,1.0,1.0, /* Vo */
    /*  0.0,0.0,1.0, /* v2 */
