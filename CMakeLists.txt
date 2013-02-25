@@ -8,21 +8,6 @@
 
 cmake_minimum_required (VERSION 2.6)
 
-
-project (vision)
-set (vision_VERSION_MAJOR 0)
-set (vision_VERSION_MINOR 1)
-
-set( CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} /lib /usr/lib /usr/local/lib )
-set( CMAKE_INCLUDE_PATH ${CMAKE_INCLUDE_PATH} /usr/include /usr/local/include )
-set( CMAKE_MODULE_PATH  ${CMAKE_MODULE_PATH}  "${PROJECT_SOURCE_DIR}/cmake" ) 
-
-set ( INSTALL_BIN_PATH bin )
-set ( INSTALL_LIB_PATH lib )
-set ( INSTALL_AR_PATH  lib )
-set ( INSTALL_HEADERS_PATH include )
-
-
 # Make relative paths absolute (needed later on)
 
 foreach(p LIB BIN HEADERS AR)
@@ -32,10 +17,30 @@ foreach(p LIB BIN HEADERS AR)
 	endif()
 endforeach()
 
+project (vision)
+set (vision_VERSION_MAJOR 0)
+set (vision_VERSION_MINOR 1)
+
+set( CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} /lib /usr/lib /usr/local/lib /usr/X11R6/lib )
+set( CMAKE_INCLUDE_PATH ${CMAKE_INCLUDE_PATH} /usr/include /usr/local/include )
+set( CMAKE_MODULE_PATH  ${CMAKE_MODULE_PATH}  "${PROJECT_SOURCE_DIR}/cmake" ) 
+
+
+set ( INSTALL_BIN_PATH bin )
+set ( INSTALL_LIB_PATH lib )
+set ( INSTALL_AR_PATH  lib )
+set ( INSTALL_HEADERS_PATH include )
+set ( CMAKE_COMPILER_IS_GNUCC true )
+
+include_directories(/usr/X11R6/include/)
+link_directories(/usr/X11R6/lib)
+SET(EXTRA_LIBS GL X11 GLU glut)
+target_link_libraries(main${EXTRA_LIBES})
+
+
 
 
 ### Search for Lib/Headers
-
 # find_package( Eigen3 2.9)
 
 ### Set include directories 
@@ -54,7 +59,7 @@ file( GLOB hdr "src/*.h*" "src/ply/*.h*" )
 
 add_executable( "ply_viewer" ${src}  ${hdr} )
 
-# target_link_libraries( "ply_viewer" ${Boost_LIBRARIES} )
+target_link_libraries( "ply_viewer" ${QT_LIBRARIES} GL GLU glut)
 
 
 install( TARGETS "ply_viewer"
