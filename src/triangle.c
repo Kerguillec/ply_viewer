@@ -60,6 +60,18 @@ void triangle_print(Ttriangle* A, FILE* stream){
 //       		fprintf(stream,"	x[k] = %lf\n	y[k] = %lf\n	z[k] = %lf\n\n",A->p3->x,A->p3->y,A->p3->z);
 //		fprintf(stream,"Triangle colorisation ===>   R = %hhu    G = %hhu    B = %hhu\n\n\n",A->R,A->G,A->B);
 	}
+double Normal_Calcul(Trigidobject* A, Trigidobject* B)
+{
+        Tpoint* TMP;
+        TMP = malloc (sizeof(Tpoint));
+
+        TMP->x = A->y* B->z - A->z* B->y;
+        TMP->y = A->z* B->x - A->x* B->z;
+        TMP->z = A->x* B->y - A->y* B->x;
+
+        return TMP;
+}
+
 
 /****************************************
 Free the triangle_free memory allocation.  
