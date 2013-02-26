@@ -203,16 +203,46 @@ Tpoint* Normal_Calcul(Trigidobject* object, int i){
         Tpoint* TMP;
         TMP = malloc (sizeof(Tpoint));
 
-        TMP->x = object->tab_triangles[i].points[1]* object->tab_triangles[i].points[2] - object->tab_triangles[i].points[2]* object->tab_triangles[i].points[1]; // Y*Z - Z*Y
+			
+	float Xba = 0;
+	float Yba = 0;
+	float Zba = 0;
+	
+	float Xca = 0;
+	float Yca = 0;
+	float Zca = 0;
 
-	TMP->x = object->tab_triangles[i].points[2]* object->tab_triangles[i].points[0] - object->tab_triangles[i].points[0]* object->tab_triangles[i].points[2]; // Z*X - X*Z
+	Xba = object->tab_points[object->tab_triangles[i].points[1]].x - object->tab_points[object->tab_triangles[i].points[0]].x; // Xb - Xa
+	Yba = object->tab_points[object->tab_triangles[i].points[1]].y - object->tab_points[object->tab_triangles[i].points[0]].y;
+	Zba = object->tab_points[object->tab_triangles[i].points[1]].z - object->tab_points[object->tab_triangles[i].points[0]].z;
 
-	TMP->x = object->tab_triangles[i].points[0]* object->tab_triangles[i].points[1] - object->tab_triangles[i].points[1]* object->tab_triangles[i].points[0]; // X*Y - Y*X
- 
-       // TMP->y = A->z* B->x - A->x* B->z;
-       // TMP->z = A->x* B->y - A->y* B->x;
+	Xca = object->tab_points[object->tab_triangles[i].points[2]].x - object->tab_points[object->tab_triangles[i].points[0]].x; // Xb - Xa
+	Yca = object->tab_points[object->tab_triangles[i].points[2]].y - object->tab_points[object->tab_triangles[i].points[0]].y;
+	Zca = object->tab_points[object->tab_triangles[i].points[2]].z - object->tab_points[object->tab_triangles[i].points[0]].z;
 
-        return TMP;
+
+
+        TMP->x = Yba * Zca - Zba * Yca;
+
+	TMP->y = Zba * Xca - Xba * Zca;
+
+	TMP->z = Xba * Yca - Yba * Xca; 
+ 	fprintf(stderr,"\nDEBUG 1 Xba  %lf\n", Xba);
+	fprintf(stderr,"\nDEBUG 1 Yba:  %lf\n", Yba);
+	fprintf(stderr,"\nDEBUG 1 Zba:  %lf\n", Zba);
+	
+	fprintf(stderr,"\nDEBUG 1 Xca  %lf\n", Xca);
+	fprintf(stderr,"\nDEBUG 1 Yca:  %lf\n", Yca);
+	fprintf(stderr,"\nDEBUG 1 Zca:  %lf\n", Zca);
+
+
+	fprintf(stderr,"\n\nDEBUG 2 TMP X = %lf\n",TMP->x);
+	fprintf(stderr,"\nDEBUG 2 TMP Y = %lf\n",TMP->y);
+	fprintf(stderr,"\nDEBUG 2 TMP Z = %lf\n",TMP->z);
+
+        return TMP; 
+
+
 }
 
 void rigidobject_print(Trigidobject* object){

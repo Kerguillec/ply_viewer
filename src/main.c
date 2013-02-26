@@ -126,7 +126,7 @@ int drawGLScene(Trigidobject* object){
 	glRotatef(rotTri, 0.0f, 1.0f, -0.0f); /* Effectue rotation 0.15f */ 
 	    
 	initLight();    
-for(i=0; i<object->nb_triangles-1; i++){  
+for(i=0; i<2; i++){  
 	
 	glBegin(GL_TRIANGLES);
 		 
@@ -136,7 +136,7 @@ for(i=0; i<object->nb_triangles-1; i++){
 	// Vertex 1
 	test=Normal_Calcul(object, i);
 
-	
+	fprintf(stderr,"\nX=%f \nY=%f \nZ=%f", test->x, test->y, test->z); 
 	glNormal3f(test->x, test->y, test->z);
 
 	glVertex3f(object->tab_points[object->tab_triangles[i].points[0]].x,
