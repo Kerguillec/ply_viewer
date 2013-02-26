@@ -88,12 +88,7 @@ int initGL(GLvoid)
     return True;
 }
 
-<<<<<<< HEAD
-void initLight()
-{ 
-	/* Définition des différents paramètres */
-=======
-// Light function ...
+
 void initLight(){
 
 	/* D?finition des diff?rents param?tres */
@@ -105,18 +100,15 @@ void initLight(){
 	GLfloat light_position[]= { 1.0, 1.0, 1.0,0.0 };
 	GLubyte shiny_obj = 128;
 	
-<<<<<<< HEAD
+
 	/* Positionnement de la lumière */ 
-=======
-	/* Positionnement de la lumi?re */
->>>>>>> 396702d166e2c7320120b408fbf5046d224260f4
+
 	glEnable(GL_LIGHTING);
 	glLightfv(GL_LIGHT0, GL_AMBIENT,light_ambient);
 	glLightfv(GL_LIGHT0,GL_DIFFUSE,light_diffuse);
 	glLightfv(GL_LIGHT0,GL_SPECULAR,light_specular);
 	glLightfv(GL_LIGHT0,GL_POSITION,light_position);
 	glEnable(GL_LIGHT0);
-<<<<<<< HEAD
 	
 	/* Réfléxion de la lumière sur l'objet */
 	
