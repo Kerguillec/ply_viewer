@@ -199,13 +199,16 @@ void rigidobject_mult_posmat(Trigidobject* rigidobject, Tmatrix* matrix) {
 
 }
 
-Trigidobject* Normal_Calcul(Trigidobject* A, Trigidobject* B){
+Tpoint* Normal_Calcul(double X, double Y, double Z,
+							double Xb, double Yb, double Zb)
+							
+{
         Tpoint* TMP;
         TMP = malloc (sizeof(Tpoint));
 
-        TMP->x = A->y* B->z - A->z* B->y;
-        TMP->y = A->z* B->x - A->x* B->z;
-        TMP->z = A->x* B->y - A->y* B->x;
+        TMP->x = Y*Zb - Z* Yb;
+        TMP->y = Z* Xb - X* Zb;
+        TMP->z = X* Yb - Y*Xb;
 
         return TMP;
 }

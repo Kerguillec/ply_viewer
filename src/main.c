@@ -88,73 +88,122 @@ int initGL(GLvoid)
     return True;
 }
 
+void initLight()
+{ 
+	/* Définition des différents paramètres */
+	GLfloat mat_amb_diff[]={ 0.8,0.8,0.8,1.0 };
+	GLfloat light_ambient[]= { 0.0, 0.0, 0.0,1.0 };
+	GLfloat light_diffuse[]= { 1.0, 1.0, 1.0,1.0 };
+	GLfloat light_specular[]= { 1.0, 1.0, 1.0,1.0 };
+	GLfloat light_position[]= { 1.0, 1.0, 1.0,0.0 };
+	GLubyte shiny_obj = 128;
+	
+	/* Positionnement de la lumière */ 
+	glEnable(GL_LIGHTING);
+	glLightfv(GL_LIGHT0, GL_AMBIENT,light_ambient);
+	glLightfv(GL_LIGHT0,GL_DIFFUSE,light_diffuse);
+	glLightfv(GL_LIGHT0,GL_SPECULAR,light_specular);
+	glLightfv(GL_LIGHT0,GL_POSITION,light_position);
+	glEnable(GL_LIGHT0);
+	
+	/* Réfléxion de la lumière sur l'objet */
+	
+
+	glMaterialfv(GL_FRONT_AND_BACK,GL_AMBIENT,light_ambient);
+
+
+	glMateriali(GL_FRONT_AND_BACK,GL_SHININESS,shiny_obj);
+	
+}	
 
 /* Here goes our drawing code */
 int drawGLScene(Trigidobject* object)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
-    glTranslatef(0.0f, 0.0f, -0.5f); /* Part de 0.0.0 et recule de 1.5 sur les x, ne bouge pas les y et recule de 6 sur les z */
-   glRotatef(rotTri, 0.0f, 1.0f, -0.0f); /* Effectue rotation 0.15f */ 
+    glTranslatef(0.0f, 0.0f, -0.7f); /* Part de 0.0.0 et recule de 1.5 sur les x, ne bouge pas les y et recule de 6 sur les z */
+    glRotatef(rotTri, 0.0f, 1.0f, -0.0f); /* Effectue rotation 0.15f */ 
     
-    fprintf(stderr,"debug\n");
-    int i=0;
-    
-    for(i=0; i<object->nb_points; i++)
-    {  
-		/* fprintf(stderr,"\n POINTS : !!!!!!! %lf \n ",object->tab_points[i].x);*/
 
+    int i=0;
+  
+	initLight();
+	
+    glEnable(GL_RESCALE_NORMAL);
+    
+    for(i=0; i<object->nb_triangles-1; i++)
+    {  
 		
 		glBegin(GL_TRIANGLES);
 		 
-		glColor3f(1.0f,0.0f,1.0f);
-					
-glNormal3(object->tab_triangles[i].points[0], object->tab_triangles[i].points[1], object-> tab_triangles[i].points[2]);
+		glColor3f(0.0f,1.0f,1.0f);
+		
+		
 	
+/* 1er sommet */
+Tpoint* test;
 
- glVertex3f(object->tab_points[i].x, 
- object->tab_points[i].y, 
- object->tab_points[i].z);
+ test=Normal_Calcul(object->tab_triangles[i].points[0], 
+ object->tab_triangles[i].points[1],
+ object-> tab_triangles[i].points[2],
+ object->tab_triangles[i+1].points[0], 
+ object->tab_triangles[i+1].points[1],
+ object-> tab_triangles[i+1].points[2]);
+
  
- /*glNormal3(object->tab_triangles[i+2].points[0], object->tab_triangles[i+2].points[1], object-> tab_triangles[i+2].points[2]);*/
-  glVertex3f(object->tab_points[i+1].x, 
- object->tab_points[i+1].y, 
- object->tab_points[i+1].z);
+ glNormal3f(test->x, test->y, test->z);
  
- /*glNormal3(object->tab_triangles[i+4].points[0], object->tab_triangles[i+4].points[1], object-> tab_triangles[i+4].points[2]);*/
- glVertex3f(object->tab_points[i+2].x, 
- object->tab_points[i+2].y, 
- object->tab_points[i+2].z);
+ //printf(" %lf \n",object->tab_triangles[object->nb_triangles-1].points[0]);
+//printf(" %lf  %lf  %lf \n",test->x,test->y,test->z);
+ 
+ glVertex3f(object->tab_points[object->tab_triangles[i].points[0]].x, 
+			object->tab_points[object->tab_triangles[i].points[0]].y, 
+			object->tab_points[object->tab_triangles[i].points[0]].z);
  
  
-					
+ /* 2ème sommet */
+ Tpoint* test1;
+
+
+ test1=Normal_Calcul(object->tab_triangles[i].points[0], 
+ object->tab_triangles[i].points[1],
+ object-> tab_triangles[i].points[2],
+ object->tab_triangles[i+1].points[0], 
+ object->tab_triangles[i+1].points[1],
+ object-> tab_triangles[i+1].points[2]);
+ 
+  glNormal3f(test1->x, test1->y, test1->z);
+ 
+ 
+   
+   glVertex3f(object->tab_points[object->tab_triangles[i].points[1]].x, 
+			object->tab_points[object->tab_triangles[i].points[1]].y, 
+			object->tab_points[object->tab_triangles[i].points[1]].z);
+
+ 
+ /* 3ème sommet */
+ Tpoint* test2;
+
+  test2=Normal_Calcul(object->tab_triangles[i].points[0], 
+ object->tab_triangles[i].points[1],
+ object-> tab_triangles[i].points[2],
+ object->tab_triangles[i+2].points[0], 
+ object->tab_triangles[i+2].points[1],
+ object-> tab_triangles[i+2].points[2]);
+ 
+  glNormal3f(test2->x, test2->y, test2->z);
+ 
+ glVertex3f(object->tab_points[object->tab_triangles[i].points[2]].x, 
+			object->tab_points[object->tab_triangles[i].points[2]].y, 
+			object->tab_points[object->tab_triangles[i].points[2]].z);
 						
 		glEnd();					
 	}
+	
 	rotTri += 0.5f;
     rotQuad -= 0.5f;						
 	
-  /* GLfloat coord[]=
- /*   { -1.0,1.0,1.0, /* Vo */
-   /*  0.0,0.0,1.0, /* v2 */
-    /*-1.0,-1.0,1.0, /* v1 */
-/*	1.0,-1.0,1.0, /* v3 */
-	/*1.0,1.0,1.0, }; /* v4 */
-	
-	
-	
-/*	GLubyte indices[] = {0,2,1, 1,2,3,   
-                     1,3,4, 1,0,4,};
-                     
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glVertexPointer(3,GL_FLOAT,0,coord);
-	
-	
-	glDrawElements(GL_TRIANGLE_STRIP,14,GL_UNSIGNED_BYTE,indices);
-	
-	
-	/*glDisableClientState(GL_VERTEX_ARRAY);*/
-	
+
     
     if (GLWin.doubleBuffered)
     {
