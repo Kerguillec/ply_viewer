@@ -27,8 +27,9 @@ void rigidobject_add_point(Trigidobject* rigidobject, double X, double Y, double
 void rigidobject_add_triangle(Trigidobject* rigidobject, Tpoint* p1, Tpoint* p2, Tpoint* p3);
 void rigidobject_set_posmat(Trigidobject* rigidobject, Tmatrix* matrix);
 void rigidobject_mult_posmat(Trigidobject* rigidobject, Tmatrix* matrix);
-Tpoint* Normal_Calcul(double X, double Y, double Z,
-							double Xb, double Yb, double Zb);
+
+Tpoint* Normal_Calcul(Trigidobject* object, int i);
+
 void rigidobject_print(Trigidobject*);
 void rigidobject_free(Trigidobject*);
 

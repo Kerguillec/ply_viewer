@@ -88,9 +88,16 @@ int initGL(GLvoid)
     return True;
 }
 
+<<<<<<< HEAD
 void initLight()
 { 
 	/* Définition des différents paramètres */
+=======
+// Light function ...
+void initLight(){
+
+	/* D?finition des diff?rents param?tres */
+>>>>>>> 396702d166e2c7320120b408fbf5046d224260f4
 	GLfloat mat_amb_diff[]={ 0.8,0.8,0.8,1.0 };
 	GLfloat light_ambient[]= { 0.0, 0.0, 0.0,1.0 };
 	GLfloat light_diffuse[]= { 1.0, 1.0, 1.0,1.0 };
@@ -98,13 +105,18 @@ void initLight()
 	GLfloat light_position[]= { 1.0, 1.0, 1.0,0.0 };
 	GLubyte shiny_obj = 128;
 	
+<<<<<<< HEAD
 	/* Positionnement de la lumière */ 
+=======
+	/* Positionnement de la lumi?re */
+>>>>>>> 396702d166e2c7320120b408fbf5046d224260f4
 	glEnable(GL_LIGHTING);
 	glLightfv(GL_LIGHT0, GL_AMBIENT,light_ambient);
 	glLightfv(GL_LIGHT0,GL_DIFFUSE,light_diffuse);
 	glLightfv(GL_LIGHT0,GL_SPECULAR,light_specular);
 	glLightfv(GL_LIGHT0,GL_POSITION,light_position);
 	glEnable(GL_LIGHT0);
+<<<<<<< HEAD
 	
 	/* Réfléxion de la lumière sur l'objet */
 	
@@ -198,13 +210,71 @@ Tpoint* test;
 			object->tab_points[object->tab_triangles[i].points[2]].z);
 						
 		glEnd();					
+=======
+
+/* R?fl?xion de la lumi?re sur l'objet */
+
+glMaterialfv(GL_FRONT_AND_BACK,GL_AMBIENT,light_ambient);
+
+glMateriali(GL_FRONT_AND_BACK,GL_SHININESS,shiny_obj);
+
+}
+
+/* Here goes our drawing code */
+int drawGLScene(Trigidobject* object){
+
+	int i=0;
+
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glLoadIdentity();
+	glTranslatef(0.0f, 0.0f, -0.5f); /* Part de 0.0.0 et recule de 1.5 sur les x, ne bouge pas les y et recule de 6 sur les z */
+	glRotatef(rotTri, 0.0f, 1.0f, -0.0f); /* Effectue rotation 0.15f */ 
+	    
+	initLight();    
+for(i=0; i<object->nb_triangles-1; i++){  
+	
+	glBegin(GL_TRIANGLES);
+		 
+	glColor3f(1.0f,0.0f,1.0f);
+	Tpoint* test;
+
+	// Vertex 1
+	test=Normal_Calcul(object, i);
+
+	
+	glNormal3f(test->x, test->y, test->z);
+
+	glVertex3f(object->tab_points[object->tab_triangles[i].points[0]].x,
+		object->tab_points[object->tab_triangles[i].points[0]].y,
+		object->tab_points[object->tab_triangles[i].points[0]].z);
+	// Vertex 2
+
+	glNormal3f(test->x, test->y, test->z);
+	
+	glVertex3f(object->tab_points[object->tab_triangles[i].points[1]].x,
+			object->tab_points[object->tab_triangles[i].points[1]].y,
+			object->tab_points[object->tab_triangles[i].points[1]].z);
+ 	// Vertex 3
+
+	glNormal3f(test->x, test->y, test->z);
+
+		glVertex3f(object->tab_points[object->tab_triangles[i].points[2]].x,
+			object->tab_points[object->tab_triangles[i].points[2]].y,
+			object->tab_points[object->tab_triangles[i].points[2]].z);
+
+glEnd();					
+>>>>>>> 396702d166e2c7320120b408fbf5046d224260f4
 	}
 	
 	rotTri += 0.5f;
     rotQuad -= 0.5f;						
 	
+<<<<<<< HEAD
 
     
+=======
+   
+>>>>>>> 396702d166e2c7320120b408fbf5046d224260f4
     if (GLWin.doubleBuffered)
     {
         glXSwapBuffers(GLWin.dpy, GLWin.win);
@@ -367,7 +437,7 @@ int main(int argc, char **argv)
 	
     done = False;
     /* default to fullscreen */
-    GLWin.fs = True;
+    GLWin.fs = False;
     createGLWindow("NeHe's Solid Objects Tutorial", 640, 480, 24, GLWin.fs);
 
     /* wait for events*/ 
