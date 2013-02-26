@@ -133,6 +133,7 @@ int drawGLScene(Trigidobject* object){
 	//initLight();  
 	 
 for(i=0; i<object->nb_triangles; i++){  
+
 	
 	glBegin(GL_TRIANGLES);
 		 
@@ -140,11 +141,11 @@ for(i=0; i<object->nb_triangles; i++){
 	Tpoint* test;
 
 	// Vertex 1
-	
 
 	glVertex3f(object->tab_points[object->tab_triangles[i].points[0]].x,
 		object->tab_points[object->tab_triangles[i].points[0]].y,
 		object->tab_points[object->tab_triangles[i].points[0]].z);
+
 	// Vertex 2
 
 
