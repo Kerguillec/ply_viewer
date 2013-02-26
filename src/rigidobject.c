@@ -199,13 +199,18 @@ void rigidobject_mult_posmat(Trigidobject* rigidobject, Tmatrix* matrix) {
 
 }
 
-Trigidobject* Normal_Calcul(Trigidobject* A, Trigidobject* B){
+Tpoint* Normal_Calcul(Trigidobject* object, int i){
         Tpoint* TMP;
         TMP = malloc (sizeof(Tpoint));
 
-        TMP->x = A->y* B->z - A->z* B->y;
-        TMP->y = A->z* B->x - A->x* B->z;
-        TMP->z = A->x* B->y - A->y* B->x;
+        TMP->x = object->tab_triangles[i].points[1]* object->tab_triangles[i].points[2] - object->tab_triangles[i].points[2]* object->tab_triangles[i].points[1]; // Y*Z - Z*Y
+
+	TMP->x = object->tab_triangles[i].points[2]* object->tab_triangles[i].points[0] - object->tab_triangles[i].points[0]* object->tab_triangles[i].points[2]; // Z*X - X*Z
+
+	TMP->x = object->tab_triangles[i].points[0]* object->tab_triangles[i].points[1] - object->tab_triangles[i].points[1]* object->tab_triangles[i].points[0]; // X*Y - Y*X
+ 
+       // TMP->y = A->z* B->x - A->x* B->z;
+       // TMP->z = A->x* B->y - A->y* B->x;
 
         return TMP;
 }
