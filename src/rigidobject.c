@@ -15,28 +15,52 @@ Exit :
 - Will give the entire modelisation of your object. 
 ********************************/
 
+/********************************
+Trigidobject allocation de memoire pour un objet
+*********************************/
+
 Trigidobject* rigidobject_malloc(){
 	Trigidobject* tmp;
 	tmp = (Trigidobject*) malloc(sizeof (Trigidobject) );
-
+	
+	// Tableau de points (tab_points) prend la taille d'un Tpoint * MODEL_SIZE (valeur def. dans rigidobject.h
 	tmp->tab_points = (Tpoint*) malloc ( MODEL_SIZE * sizeof ( Tpoint ) ) ;
+
+	/****	Begin   ****
+	   Checking Alloc 			  
+	********************/
 	if ( tmp->tab_points == NULL ) {
 		fprintf( stderr, "rigidobject.c - Erreur allocation memoire \n" ) ;
 		exit(0) ;
 	}
+	/****	End   ****
+	Check alloc is ok .. 
+	********************/
 
 
+	// Tableau de triangles (tab_triangles) prend la taille d'un Ttriangle * MODEL_SIZE (=Val. fixe) 
 	tmp->tab_triangles = ( Ttriangle* ) malloc ( MODEL_SIZE * sizeof ( Ttriangle ) ) ;
+	
+
+	/*	Begin 
+	   Checking Alloc 
+			 */
 	if ( tmp->tab_triangles == NULL ) {
 		fprintf( stderr, "rigidobject.c - Erreur allocation memoire \n" ) ;
 	}
+	/*	End
+	Check alloc is ok .. 
+		    	   */
 
+	// Initialisation des valeurs nb_* à 0 
 	tmp->nb_points = 0 ;
 	tmp->nb_triangles = 0 ;
 
+	// Initialisation des valeurs max_* à MODEL_SIZE 
 	tmp->max_points = MODEL_SIZE ;
 	tmp->max_triangles = MODEL_SIZE ;
 
+	// Initialisation de la matrice
 	tmp->pos = matrix_malloc ( 1.0, 0.0, 0.0, 0.0,  
 	                           0.0, 1.0, 0.0, 0.0, 
 				   0.0, 0.0, 1.0, 0.0,
@@ -174,6 +198,18 @@ void rigidobject_mult_posmat(Trigidobject* rigidobject, Tmatrix* matrix) {
         rigidobject->pos->zl=(rigidobject->pos->wl)*(matrix->zl);
 
 }
+
+Trigidobject* Normal_Calcul(Trigidobject* A, Trigidobject* B){
+        Tpoint* TMP;
+        TMP = malloc (sizeof(Tpoint));
+
+        TMP->x = A->y* B->z - A->z* B->y;
+        TMP->y = A->z* B->x - A->x* B->z;
+        TMP->z = A->x* B->y - A->y* B->x;
+
+        return TMP;
+}
+
 void rigidobject_print(Trigidobject* object){
 	int i ;
 	for ( i=0; i<10; i++ ) {
