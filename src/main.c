@@ -91,8 +91,8 @@ int initGL(GLvoid)
 
 void initLight(){
 
-	/* D?finition des diff?rents param?tres */
->>>>>>> 396702d166e2c7320120b408fbf5046d224260f4
+	/* Définition des différents paramètres */
+
 	GLfloat mat_amb_diff[]={ 0.8,0.8,0.8,1.0 };
 	GLfloat light_ambient[]= { 0.0, 0.0, 0.0,1.0 };
 	GLfloat light_diffuse[]= { 1.0, 1.0, 1.0,1.0 };
