@@ -227,18 +227,7 @@ Tpoint* Normal_Calcul(Trigidobject* object, int i){
 	TMP->y = Zba * Xca - Xba * Zca;
 
 	TMP->z = Xba * Yca - Yba * Xca; 
- 	fprintf(stderr,"\nDEBUG 1 Xba  %lf\n", Xba);
-	fprintf(stderr,"\nDEBUG 1 Yba:  %lf\n", Yba);
-	fprintf(stderr,"\nDEBUG 1 Zba:  %lf\n", Zba);
-	
-	fprintf(stderr,"\nDEBUG 1 Xca  %lf\n", Xca);
-	fprintf(stderr,"\nDEBUG 1 Yca:  %lf\n", Yca);
-	fprintf(stderr,"\nDEBUG 1 Zca:  %lf\n", Zca);
-
-
-	fprintf(stderr,"\n\nDEBUG 2 TMP X = %lf\n",TMP->x);
-	fprintf(stderr,"\nDEBUG 2 TMP Y = %lf\n",TMP->y);
-	fprintf(stderr,"\nDEBUG 2 TMP Z = %lf\n",TMP->z);
+ 	
 
         return TMP; 
 

@@ -36,7 +36,8 @@ typedef struct {
     XF86VidModeModeInfo deskMode;
     int x, y;
     unsigned int width, height;
-    unsigned int depth;    
+    unsigned int depth; 
+      
 } GLWindow;
 
 /* attributes for a single buffered visual in RGBA format with at least
@@ -88,6 +89,9 @@ int initGL(GLvoid)
     return True;
 }
 
+int X=0;
+int Y=0;
+int Z=0;
 
 void initLight(){
 
@@ -127,7 +131,7 @@ int drawGLScene(Trigidobject* object){
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
-	glTranslatef(0.0f, -0.1f, -0.1f); /* Part de 0.0.0 et recule de 1.5 sur les x, ne bouge pas les y et recule de 6 sur les z */
+	glTranslatef(0.0f, -0.1f, -0.5f); /* Part de 0.0.0 et recule de 1.5 sur les x, ne bouge pas les y et recule de 6 sur les z */
 	glRotatef(rotTri, 0.0f, 1.0f, -0.0f); /* Effectue rotation 0.15f */ 
 	    
 	//initLight();  
@@ -165,7 +169,7 @@ glEnd();
 
 	glBegin(GL_LINES);
 	glColor3f(1.0f,1.0f,1.0f);
-	glEnable(GL_NORMALIZE);a
+	glEnable(GL_NORMALIZE);
 	test=Normal_Calcul(object, i);
 
 	//fprintf(stderr,"\nX=%f \nY=%f \nZ=%f", test->x, test->y, test->z); 
@@ -391,6 +395,14 @@ int main(int argc, char **argv)
                         createGLWindow("NeHe's Solid Objects Tutorial",
                             640, 480, 24, GLWin.fs);
                     }
+                    if (XLookupKeysym(&event.xkey,0) == XK_F2)
+                    {
+                        X=X+2;
+                        Y=Y+2;
+                        printf("Nul");
+                        
+                    }
+                    
                     break;
                 case ClientMessage:
                     if (*XGetAtomName(GLWin.dpy, event.xclient.message_type) == 
