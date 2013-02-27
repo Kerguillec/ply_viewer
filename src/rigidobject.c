@@ -222,14 +222,13 @@ Tpoint* Normal_Calcul(Trigidobject* object, int i){
 
 
 
-        TMP->x = Yba * Zca - Zba * Yca;
+    TMP->x = Yba * Zca - Zba * Yca;
 
 	TMP->y = Zba * Xca - Xba * Zca;
 
 	TMP->z = Xba * Yca - Yba * Xca; 
  	
-
-        return TMP; 
+	 return TMP; 
 
 }
 
