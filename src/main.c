@@ -89,25 +89,26 @@ int initGL(GLvoid)
     return True;
 }
 
-int X=0;
-int Y=0;
-int Z=0;
+GLfloat X=0;
+GLfloat Y=0;
+GLfloat Z=0;
 
 void initLight(){
 
 	/* Définition des différents paramètres */
 
-	GLfloat mat_amb_diff[]={ 0.8,0.8,0.8,1.0 };
-	GLfloat light_ambient[]= { 0.0, 0.0, 0.0,1.0 };
-	GLfloat light_diffuse[]= { 1.0, 1.0, 1.0,1.0 };
+	GLfloat mat_amb_diff[]={ 0.7,0.7,0.7,1.0 };
+	GLfloat light_ambient[]= { 0.2, 0.2, 0.2,1.0 };
+	GLfloat light_diffuse[]= { 0.0, 0.0, 1.0,1.0 };
 	GLfloat light_specular[]= { 1.0, 1.0, 1.0,1.0 };
-	GLfloat light_position[]= { 1.0, 1.0, 1.0,0.0 };
-	GLubyte shiny_obj = 128;
-	
+	GLfloat light_position[]= { 0.0, 0.0, 0.0,0.0 };
+	GLfloat mat_emission[]= { 1.0,0.0,1.0,0.0 };
+	GLfloat low_shininess[]={128.0};
 
 	/* Positionnement de la lumière */ 
 
 	glEnable(GL_LIGHTING);
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT,light_ambient);
 	glLightfv(GL_LIGHT0, GL_AMBIENT,light_ambient);
 	glLightfv(GL_LIGHT0,GL_DIFFUSE,light_diffuse);
 	glLightfv(GL_LIGHT0,GL_SPECULAR,light_specular);
@@ -116,11 +117,12 @@ void initLight(){
 	
 	/* Réfléxion de la lumière sur l'objet */
 	
-
+	glLightModeli(GL_LIGHT_MODEL_TWO_SIDE,GL_TRUE);
+	glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER,GL_TRUE);
 	glMaterialfv(GL_FRONT_AND_BACK,GL_AMBIENT,light_ambient);
-
-
-	glMateriali(GL_FRONT_AND_BACK,GL_SHININESS,shiny_obj);
+	glMaterialfv(GL_FRONT,GL_SPECULAR,light_specular);
+	glMaterialfv(GL_FRONT,GL_EMISSION,mat_emission);
+	glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,low_shininess);
 	
 }	
 
@@ -131,14 +133,16 @@ int drawGLScene(Trigidobject* object){
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
-	glTranslatef(0.0f, -0.1f, -0.5f); /* Part de 0.0.0 et recule de 1.5 sur les x, ne bouge pas les y et recule de 6 sur les z */
+	glTranslated(X,Y,Z);
+	glTranslatef(0.0f, -0.1f, -0.2f); /* Part de 0.0.0 et recule de 1.5 sur les x, ne bouge pas les y et recule de 6 sur les z */
 	glRotatef(rotTri, 0.0f, 1.0f, -0.0f); /* Effectue rotation 0.15f */ 
 	    
-	//initLight();  
+	initLight();  
 	 
 for(i=0; i<object->nb_triangles; i++){  
 
-	
+	glEnable(GL_CULL_FACE);
+	 glCullFace(GL_BACK);
 	glBegin(GL_TRIANGLES);
 		 
 	glColor3f(1.0f,0.0f,1.0f);
@@ -396,10 +400,22 @@ int main(int argc, char **argv)
                             640, 480, 24, GLWin.fs);
                     }
                     if (XLookupKeysym(&event.xkey,0) == XK_F2)
-                    {
-                        X=X+2;
-                        Y=Y+2;
-                        printf("Nul");
+                    {	
+						
+                        X+=0.0f;
+                        Y+=0.0f;
+                        Z+=0.01f;
+                        
+                        
+                    }
+                    
+                    if (XLookupKeysym(&event.xkey,0) == XK_F3)
+                    {	
+						
+                        X+=0.0f;
+                        Y+=0.0f;
+                        Z-=0.01f;
+                        
                         
                     }
                     
