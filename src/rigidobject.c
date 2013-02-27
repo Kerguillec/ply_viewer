@@ -211,6 +211,7 @@ Tpoint* Normal_Calcul(Trigidobject* object, int i){
 	float Xca = 0;
 	float Yca = 0;
 	float Zca = 0;
+	
 
 	Xba = object->tab_points[object->tab_triangles[i].points[1]].x - object->tab_points[object->tab_triangles[i].points[0]].x; // Xb - Xa
 	Yba = object->tab_points[object->tab_triangles[i].points[1]].y - object->tab_points[object->tab_triangles[i].points[0]].y;

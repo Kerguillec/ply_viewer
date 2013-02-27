@@ -125,35 +125,48 @@ void initLight(){
 	glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,low_shininess);
 	
 }	
+	
+Tpoint* Update_Normale(Tpoint* normale)
+	{
+		glMatrixMode(GL_MODELVIEW);
+		glPopMatrix();glRotatef(-rotTri, 0.0f, -1.0f, 0.0f);
+		glTranslatef(0.0f, +0.1f, +0.2f);
+		
+		glPushMatrix();
+		return normale;
+	}
 
 /* Here goes our drawing code */
-int drawGLScene(Trigidobject* object){
+int drawGLScene(Tpoint* test, Trigidobject* object){
 
 	int i=0;
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	glTranslated(X,Y,Z);
 	glTranslatef(0.0f, -0.1f, -0.2f); /* Part de 0.0.0 et recule de 1.5 sur les x, ne bouge pas les y et recule de 6 sur les z */
-	glRotatef(rotTri, 0.0f, 1.0f, -0.0f); /* Effectue rotation 0.15f */ 
+	glRotatef(rotTri, 0.0f, 1.0f, 0.0f);/* Effectue rotation 0.15f */
+	glPushMatrix();  
 	    
 	//initLight();  
-	 
+
+	
 for(i=0; i<object->nb_triangles; i++){  
 
 	glEnable(GL_CULL_FACE);
-	 glCullFace(GL_BACK);
+	glCullFace(GL_BACK);
 	glEnable(GL_DEPTH_TEST);
-
-	Tpoint* test;
 	
 	glEnable(GL_NORMALIZE);
-	test=Normal_Calcul(object, i);
-
+	test=Update_Normale(test);
+	
+	glNormal3f(test->x,test->y,test->z);
+	
 	if(test->z > 0)
 	{
-		
+	
+	
 	glBegin(GL_LINES);
 	glColor3f(1.0f,1.0f,1.0f);
 	glVertex3f(object->tab_points[object->tab_triangles[i].points[0]].x,
@@ -166,9 +179,10 @@ for(i=0; i<object->nb_triangles; i++){
 		glEnd();
 		
 		
-		glBegin(GL_TRIANGLES);
+	glBegin(GL_TRIANGLES);
 		 
 	glColor3f(1.0f,0.0f,1.0f);
+	
 	
 			// Vertex 1
 	glVertex3f(object->tab_points[object->tab_triangles[i].points[0]].x,
@@ -189,11 +203,6 @@ for(i=0; i<object->nb_triangles; i++){
 		
 	}
 	
-
-
-
-	
-}
 /*
 	glBegin(GL_LINES);
 	glColor3f(1.0f,1.0f,1.0f);
@@ -213,11 +222,11 @@ for(i=0; i<object->nb_triangles; i++){
 	}
 	
 	
-	glEnd();
-	}*/
+	glEnd();*/
+	}
 	
-	rotTri += 0.5f;
-    rotQuad -= 0.5f;						
+	
+  					
 
     if (GLWin.doubleBuffered)
     {
@@ -374,6 +383,13 @@ int main(int argc, char **argv)
 	lapin = rigidobject_malloc() ;
 
 	rigidobject_loadply( lapin, argv[1] ) ;
+	//Tpoint* test;test=Normal_Calcul(lapin, i);
+	int i=0;Tpoint* test;
+	for(i=0; i<lapin->nb_triangles; i++)
+		
+		test=Normal_Calcul(lapin, i);
+		
+
 
 	//rigidobject_print (lapin) ;
 
@@ -396,7 +412,7 @@ int main(int argc, char **argv)
                 case Expose:
 	                if (event.xexpose.count != 0)
 	                    break;
-                    drawGLScene(lapin);
+                   drawGLScene(test,lapin);
          	        break;
 	            case ConfigureNotify:
 	            /* call resizeGLScene only if our window-size changed */
@@ -447,6 +463,14 @@ int main(int argc, char **argv)
                         
                     }
                     
+                       if (XLookupKeysym(&event.xkey,0) == XK_F4)
+                    {	
+						
+                        rotTri+=5.0f;
+                        
+                        
+                    }
+                    
                     break;
                 case ClientMessage:
                     if (*XGetAtomName(GLWin.dpy, event.xclient.message_type) == 
@@ -460,7 +484,7 @@ int main(int argc, char **argv)
                     break;
             }
         }
-        drawGLScene(lapin);
+        drawGLScene(test, lapin);
     }
     killGLWindow();
     exit (0);
