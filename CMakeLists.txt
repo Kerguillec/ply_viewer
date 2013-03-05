@@ -59,7 +59,7 @@ file( GLOB hdr "src/*.h*" "src/ply/*.h*" )
 
 add_executable( "ply_viewer" ${src}  ${hdr} )
 
-target_link_libraries( "ply_viewer" ${QT_LIBRARIES} GL GLU glut)
+target_link_libraries( "ply_viewer" ${QT_LIBRARIES} Xxf86vm X11 GL GLU glut)
 
 
 install( TARGETS "ply_viewer"

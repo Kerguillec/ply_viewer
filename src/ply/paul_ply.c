@@ -113,7 +113,55 @@ int rigidobject_loadply (Trigidobject* object, char* filename) {
 			for (j=0; j<object->nb_triangles; j++ )
 				ply_get_element( file, &(object->tab_triangles[j]) ) ;
 		
+		}	
+	
+/* TODO color provided by PLY !! 
+		if ( strcmp( elem_names[i], "red" ) == 0 ) {
+			object->nb_triangles = nb ;
+			object->tab_triangles = malloc ( object->nb_triangles * sizeof ( Ttriangle ) ) ;
+		
+			for ( j=0; j<nprops; j++ ) {
+				printf("    -> Name: %s \n", prop[j]->name);
+				if ( strcmp( prop[j]->name,"vertex_indices")==0 ) 
+					 ply_get_property( file, "face", &faceProps[0] );	
+				
+			}
+	
+			for (j=0; j<object->nb_triangles; j++ )
+				ply_get_element( file, &(object->tab_triangles[j]) ) ;
+		
 		}
+		if ( strcmp( elem_names[i], "green" ) == 0 ) {
+			object->nb_triangles = nb ;
+			object->tab_triangles = malloc ( object->nb_triangles * sizeof ( Ttriangle ) ) ;
+		
+			for ( j=0; j<nprops; j++ ) {
+				printf("    -> Name: %s \n", prop[j]->name);
+				if ( strcmp( prop[j]->name,"vertex_indices")==0 ) 
+					 ply_get_property( file, "face", &faceProps[0] );	
+				
+			}
+	
+			for (j=0; j<object->nb_triangles; j++ )
+				ply_get_element( file, &(object->tab_triangles[j]) ) ;
+		
+		}
+		if ( strcmp( elem_names[i], "blue" ) == 0 ) {
+			object->nb_triangles = nb ;
+			object->tab_triangles = malloc ( object->nb_triangles * sizeof ( Ttriangle ) ) ;
+		
+			for ( j=0; j<nprops; j++ ) {
+				printf("    -> Name: %s \n", prop[j]->name);
+				if ( strcmp( prop[j]->name,"vertex_indices")==0 ) 
+					 ply_get_property( file, "face", &faceProps[0] );	
+				
+			}
+	
+			for (j=0; j<object->nb_triangles; j++ )
+				ply_get_element( file, &(object->tab_triangles[j]) ) ;
+		
+		}
+	*/
 	}
 	
 	return 0 ;

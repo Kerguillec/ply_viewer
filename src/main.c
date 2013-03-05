@@ -23,6 +23,7 @@
 #include "point.h"
 #include "triangle.h"
 #include "rigidobject.h"
+#include <dirent.h>
 
 /* stuff about our window grouped together */
 typedef struct {
@@ -137,7 +138,7 @@ Tpoint* Update_Normale(Tpoint* normale)
 	}
 
 /* Here goes our drawing code */
-int drawGLScene(Tpoint* test, Trigidobject* object){
+int drawGLScene(Tpoint* compute_normals, Trigidobject* object){
 
 	int i=0;
 
@@ -159,11 +160,11 @@ for(i=0; i<object->nb_triangles; i++){
 	glEnable(GL_DEPTH_TEST);
 	
 	glEnable(GL_NORMALIZE);
-	test=Update_Normale(test);
+	//compute_normals=Update_Normale(compute_normals);
 	
-	glNormal3f(test->x,test->y,test->z);
+	glNormal3f(compute_normals->x,compute_normals->y,compute_normals->z);
 	
-	if(test->z > 0)
+	if(compute_normals->z > 0)
 	{
 	
 	
@@ -173,15 +174,15 @@ for(i=0; i<object->nb_triangles; i++){
 		object->tab_points[object->tab_triangles[i].points[0]].y,
 		object->tab_points[object->tab_triangles[i].points[0]].z);
 		
-	glVertex3f(object->tab_points[object->tab_triangles[i].points[0]].x+test->x+0.002,
-		object->tab_points[object->tab_triangles[i].points[0]].y+test->y+0.002,
-		object->tab_points[object->tab_triangles[i].points[0]].z+test->z+0.002);
+	glVertex3f(object->tab_points[object->tab_triangles[i].points[0]].x+compute_normals->x+0.002,
+		object->tab_points[object->tab_triangles[i].points[0]].y+compute_normals->y+0.002,
+		object->tab_points[object->tab_triangles[i].points[0]].z+compute_normals->z+0.002);
 		glEnd();
 		
 		
 	glBegin(GL_TRIANGLES);
 		 
-	glColor3f(1.0f,0.0f,1.0f);
+	//glColor3f(1.0f,0.0f,1.0f);
 	
 	
 			// Vertex 1
@@ -207,18 +208,18 @@ for(i=0; i<object->nb_triangles; i++){
 	glBegin(GL_LINES);
 	glColor3f(1.0f,1.0f,1.0f);
 	glEnable(GL_NORMALIZE);
-	test=Normal_Calcul(object, i);
+	compute_normals=Normal_Calcul(object, i);
 
 	
-	glNormal3f(test->x,test->y,test->z);
-	if(test->z > 0)
+	glNormal3f(compute_normals->x,compute_normals->y,compute_normals->z);
+	if(compute_normals->z > 0)
 	{
 	glVertex3f(object->tab_points[object->tab_triangles[i].points[0]].x,
 		object->tab_points[object->tab_triangles[i].points[0]].y,
 		object->tab_points[object->tab_triangles[i].points[0]].z);
-	glVertex3f(object->tab_points[object->tab_triangles[i].points[0]].x+test->x+0.002,
-		object->tab_points[object->tab_triangles[i].points[0]].y+test->y+0.002,
-		object->tab_points[object->tab_triangles[i].points[0]].z+test->z+0.002);
+	glVertex3f(object->tab_points[object->tab_triangles[i].points[0]].x+compute_normals->x+0.002,
+		object->tab_points[object->tab_triangles[i].points[0]].y+compute_normals->y+0.002,
+		object->tab_points[object->tab_triangles[i].points[0]].z+compute_normals->z+0.002);
 	}
 	
 	
@@ -369,32 +370,64 @@ Bool createGLWindow(char* title, int width, int height, int bits,
     initGL();
     return True;    
 }
+/***********************************************************
+***********************************************************
+<<							>>
+      <<		  MAIN 			>>
+<<							>>
+***********************************************************
+***********************************************************/
+
 
 int main(int argc, char **argv)
-{
-    XEvent event;
-    Bool done;
-    
-    
-    Trigidobject*	lapin ;
+{ 
+//>>>>>>>>>>>>>>>>>>>>>>START to Load PLY<<<<<<<<<<<<<<<<<<<
+/*
+// TODO find a way to allow to get multiple files from a directory
+
+	if (argv[2] != NULL){
+	
+		int i;
+		DIR * rep = opendir(argv[2]);
+		if (rep != NULL)
+		{
+		struct dirent * ent;
+		 
+			while ((ent = readdir(rep)) != NULL)
+			{
+				printf("%s\n", ent->d_name);
+			}
+			closedir(rep);
+		}
+
+	}else 
+		fprintf(stderr,"Error, precise the path to PLY ASCII files");
+*/
+
+	Trigidobject*	object ;
 
 	printf(" File : %s \n", argv[1] ) ;
 
-	lapin = rigidobject_malloc() ;
-
-	rigidobject_loadply( lapin, argv[1] ) ;
-	//Tpoint* test;test=Normal_Calcul(lapin, i);
-	int i=0;Tpoint* test;
-	for(i=0; i<lapin->nb_triangles; i++)
+		int i=0;
 		
-		test=Normal_Calcul(lapin, i);
+		object = rigidobject_malloc() ;
+
+		rigidobject_loadply( object, argv[1] ) ;
+		Tpoint* compute_normals;
 		
-
-
-	//rigidobject_print (lapin) ;
-
-	//rigidobject_free ( lapin ) ;
+		for(i=0; i<object->nb_triangles; i++)
+			compute_normals=Normal_Calcul(object, i);
+		
 	
+
+	//rigidobject_print (object) ;
+
+//>>>>>>>>>>>>>>>>>>>>>>END to Load PLY<<<<<<<<<<<<<<<<<<<
+
+    XEvent event;
+    Bool done;
+    
+   	
     done = False;
     /* default to fullscreen */
     GLWin.fs = False;
@@ -412,8 +445,8 @@ int main(int argc, char **argv)
                 case Expose:
 	                if (event.xexpose.count != 0)
 	                    break;
-                   drawGLScene(test,lapin);
-         	        break;
+                   	drawGLScene(compute_normals,object);
+         	        	break;
 	            case ConfigureNotify:
 	            /* call resizeGLScene only if our window-size changed */
 	                if ((event.xconfigure.width != GLWin.width) || 
@@ -443,33 +476,20 @@ int main(int argc, char **argv)
                         createGLWindow("NeHe's Solid Objects Tutorial",
                             640, 480, 24, GLWin.fs);
                     }
-                    if (XLookupKeysym(&event.xkey,0) == XK_F2)
-                    {	
-						
+                    if (XLookupKeysym(&event.xkey,0) == XK_F2){	
                         X+=0.0f;
                         Y+=0.0f;
                         Z+=0.01f;
-                        
-                        
-                    }
+                    	}
                     
-                    if (XLookupKeysym(&event.xkey,0) == XK_F3)
-                    {	
-						
-                        X+=0.0f;
-                        Y+=0.0f;
-                        Z-=0.01f;
-                        
-                        
-                    }
+                   	 if (XLookupKeysym(&event.xkey,0) == XK_F3){	
+                        	 X+=0.0f;
+                       		 Y+=0.0f;
+                        	 Z-=0.01f;
+                   	 }
                     
-                       if (XLookupKeysym(&event.xkey,0) == XK_F4)
-                    {	
-						
-                        rotTri+=5.0f;
-                        
-                        
-                    }
+                        if (XLookupKeysym(&event.xkey,0) == XK_F4)     
+				rotTri+=5.0f;
                     
                     break;
                 case ClientMessage:
@@ -484,8 +504,10 @@ int main(int argc, char **argv)
                     break;
             }
         }
-        drawGLScene(test, lapin);
+        drawGLScene(compute_normals, object);
+	usleep(90000);
     }
     killGLWindow();
     exit (0);
+	rigidobject_free ( object ) ;
 }
