@@ -382,27 +382,41 @@ Bool createGLWindow(char* title, int width, int height, int bits,
 int main(int argc, char **argv)
 { 
 //>>>>>>>>>>>>>>>>>>>>>>START to Load PLY<<<<<<<<<<<<<<<<<<<
-/*
+/
 // TODO find a way to allow to get multiple files from a directory
 
 	if (argv[2] != NULL){
-	
-		int i;
-		DIR * rep = opendir(argv[2]);
-		if (rep != NULL)
-		{
-		struct dirent * ent;
-		 
-			while ((ent = readdir(rep)) != NULL)
-			{
+		int nb_files=0;
+		DIR* rep = opendir(argv[2]);
+		Trigidobject* tmp; 
+		
+		if (rep != NULL){
+
+			struct dirent* ent;
+			printf("files:");
+		
+			while ((ent = readdir(rep)) != NULL){
 				printf("%s\n", ent->d_name);
+				nb_files++;
 			}
-			closedir(rep);
+
+			tmp = malloc (sizeof(nb_files * Trigidobject)); //Generate a tab to save many files as wanted.
+			if (tmp == NULL){
+				fprintf(stderr,"Error: can't malloc files ... (main.c)");
+				return -1;
+			}
+		
+			while ((ent = readdir(rep)) != NULL){
+			
+					
+
+			}
+		 	closedir(rep);
 		}
 
 	}else 
 		fprintf(stderr,"Error, precise the path to PLY ASCII files");
-*/
+/
 
 	Trigidobject*	object ;
 
