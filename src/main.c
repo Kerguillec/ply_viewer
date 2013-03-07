@@ -382,13 +382,13 @@ Bool createGLWindow(char* title, int width, int height, int bits,
 int main(int argc, char **argv)
 { 
 //>>>>>>>>>>>>>>>>>>>>>>START to Load PLY<<<<<<<<<<<<<<<<<<<
-/
+/*
 // TODO find a way to allow to get multiple files from a directory
 
 	if (argv[2] != NULL){
 		int nb_files=0;
 		DIR* rep = opendir(argv[2]);
-		Trigidobject* tmp; 
+		Trigidobject* file; 
 		
 		if (rep != NULL){
 
@@ -400,7 +400,7 @@ int main(int argc, char **argv)
 				nb_files++;
 			}
 
-			tmp = malloc (sizeof(nb_files * Trigidobject)); //Generate a tab to save many files as wanted.
+			file = malloc (sizeof(nb_files * Trigidobject)); //Generate a tab to save many files as wanted.
 			if (tmp == NULL){
 				fprintf(stderr,"Error: can't malloc files ... (main.c)");
 				return -1;
@@ -408,15 +408,13 @@ int main(int argc, char **argv)
 		
 			while ((ent = readdir(rep)) != NULL){
 			
-					
-
 			}
 		 	closedir(rep);
 		}
 
 	}else 
 		fprintf(stderr,"Error, precise the path to PLY ASCII files");
-/
+*/
 
 	Trigidobject*	object ;
 
@@ -445,7 +443,7 @@ int main(int argc, char **argv)
     done = False;
     /* default to fullscreen */
     GLWin.fs = False;
-    createGLWindow("NeHe's Solid Objects Tutorial", 640, 480, 24, GLWin.fs);
+    createGLWindow("RHex simulator", 640, 480, 24, GLWin.fs);
 
     /* wait for events*/ 
     while (!done)
@@ -487,7 +485,7 @@ int main(int argc, char **argv)
                     {
                         killGLWindow();
                         GLWin.fs = !GLWin.fs;
-                        createGLWindow("NeHe's Solid Objects Tutorial",
+                        createGLWindow("RHex Simulator",
                             640, 480, 24, GLWin.fs);
                     }
                     if (XLookupKeysym(&event.xkey,0) == XK_F2){	
