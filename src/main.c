@@ -59,7 +59,7 @@ static int attrListDbl[] = { GLX_RGBA, GLX_DOUBLEBUFFER,
     None };
 
 GLWindow GLWin;
-GLfloat rotTri, rotQuad;
+GLfloat rotH, rotV;
 
 /* function called when our window is resized (should only happen in window mode) */
 void resizeGLScene(unsigned int width, unsigned int height)
@@ -85,149 +85,132 @@ int initGL(GLvoid)
     /* we use resizeGLScene once to set up our initial perspective */
     resizeGLScene(GLWin.width, GLWin.height);
     /* Reset the rotation angles of our objects */
-    rotTri = 0;
-    rotQuad = 0;
+    rotH = 0;
+    rotV = 0;
     return True;
 }
 
 GLfloat X=0;
-GLfloat Y=0;
-GLfloat Z=0;
+GLfloat Y=-0.15;
+GLfloat Z=-0.25;
 
 void initLight(){
 
 	/* Définition des différents paramètres */
 
-	GLfloat mat_amb_diff[]={ 0.7,0.7,0.7,1.0 };
-	GLfloat light_ambient[]= { 0.2, 0.2, 0.2,1.0 };
-	GLfloat light_diffuse[]= { 0.0, 0.0, 1.0,1.0 };
-	GLfloat light_specular[]= { 1.0, 1.0, 1.0,1.0 };
-	GLfloat light_position[]= { 0.0, 0.0, 0.0,0.0 };
-	GLfloat mat_emission[]= { 1.0,0.0,1.0,0.0 };
-	GLfloat low_shininess[]={128.0};
+
+     float LightPos[4]={-5.0f,5.0f,10.0f,0.0f};
+     float Ambient[4]={0.5f,0.5f,0.5f,1.0f};
 
 	/* Positionnement de la lumière */ 
 
-	glEnable(GL_LIGHTING);
-	glLightModelfv(GL_LIGHT_MODEL_AMBIENT,light_ambient);
-	glLightfv(GL_LIGHT0, GL_AMBIENT,light_ambient);
-	glLightfv(GL_LIGHT0,GL_DIFFUSE,light_diffuse);
-	glLightfv(GL_LIGHT0,GL_SPECULAR,light_specular);
-	glLightfv(GL_LIGHT0,GL_POSITION,light_position);
-	glEnable(GL_LIGHT0);
+     glLightfv(GL_LIGHT0,GL_POSITION,LightPos);
+     glLightfv(GL_LIGHT0,GL_AMBIENT,Ambient);
+	
+	 glEnable(GL_LIGHTING) ;
+	 glEnable(GL_LIGHT0);
 	
 	/* Réfléxion de la lumière sur l'objet */
 	
-	glLightModeli(GL_LIGHT_MODEL_TWO_SIDE,GL_TRUE);
-	glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER,GL_TRUE);
-	glMaterialfv(GL_FRONT_AND_BACK,GL_AMBIENT,light_ambient);
-	glMaterialfv(GL_FRONT,GL_SPECULAR,light_specular);
-	glMaterialfv(GL_FRONT,GL_EMISSION,mat_emission);
-	glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,low_shininess);
+	 // glLightModeli(GL_LIGHT_MODEL_TWO_SIDE,GL_TRUE);
+	 // glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER,GL_TRUE);
+	 // glMaterialfv(GL_FRONT_AND_BACK,GL_AMBIENT,light_ambient);
+	// glMaterialfv(GL_FRONT,GL_SPECULAR,light_specular);
+	// glMaterialfv(GL_FRONT,GL_EMISSION,mat_emission);
+	// glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,low_shininess);
 	
 }	
-	
+	const float DEG2RAD = 3.141593f / 180;
 Tpoint* Update_Normale(Tpoint* normale)
 	{
 		glMatrixMode(GL_MODELVIEW);
-		glPopMatrix();glRotatef(-rotTri, 0.0f, -1.0f, 0.0f);
-		glTranslatef(0.0f, +0.1f, +0.2f);
+		glLoadIdentity();
+		glPopMatrix();
+	
+		/*GLfloat Matrix_y []= { cosf (rotTri*DEG2RAD*3.6-45), 0.0, sinf(rotTri*DEG2RAD*3.6-45),
+						0.0, 1.0, 0.0,
+						-sinf(rotTri*DEG2RAD*3.6-45), 0.0, cosf(rotTri*DEG2RAD*3.6-45) };
+		glMultMatrixf(Matrix_y);*/
+		//glRotatef(rotTri*3.6,0.0f,0.0f,1.0f);
 		
-		glPushMatrix();
 		return normale;
 	}
 
 /* Here goes our drawing code */
-int drawGLScene(Tpoint* compute_normals, Trigidobject* object){
+int drawGLScene(Tpoint** compute_normals, Trigidobject* object){
 
 	int i=0;
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+
 	glTranslated(X,Y,Z);
-	glTranslatef(0.0f, -0.1f, -0.2f); /* Part de 0.0.0 et recule de 1.5 sur les x, ne bouge pas les y et recule de 6 sur les z */
-	glRotatef(rotTri, 0.0f, 1.0f, 0.0f);/* Effectue rotation 0.15f */
+	glRotatef(rotH, 0.0f, 1.0f, 0.0f);/* Effectue rotation de rotTri */
+	glRotatef(rotV, 1.0f, 0.0f, 0.0f);/* Effectue rotation de rotTri */
 	glPushMatrix();  
 	    
-	//initLight();  
-
-	
+	initLight();  
+   
 for(i=0; i<object->nb_triangles; i++){  
-
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_BACK);
+	
 	glEnable(GL_DEPTH_TEST);
 	
-	glEnable(GL_NORMALIZE);
+	//glEnable(GL_NORMALIZE);
+		
 	//compute_normals=Update_Normale(compute_normals);
+	// glNormal3f(compute_normals[i]->x,compute_normals[i]->y,compute_normals[i]->z);
 	
-	glNormal3f(compute_normals->x,compute_normals->y,compute_normals->z);
+	// printf("%f %f %f \n", compute_normals[i]->x,compute_normals[i]->y,compute_normals[i]->z);
 	
-	if(compute_normals->z > 0)
-	{
+	//if(compute_normals[i]->z > 0)
+	//{
 	
 	
-	glBegin(GL_LINES);
+/*	glBegin(GL_LINES);
+	
 	glColor3f(1.0f,1.0f,1.0f);
+	
 	glVertex3f(object->tab_points[object->tab_triangles[i].points[0]].x,
 		object->tab_points[object->tab_triangles[i].points[0]].y,
 		object->tab_points[object->tab_triangles[i].points[0]].z);
 		
-	glVertex3f(object->tab_points[object->tab_triangles[i].points[0]].x+compute_normals->x+0.002,
-		object->tab_points[object->tab_triangles[i].points[0]].y+compute_normals->y+0.002,
-		object->tab_points[object->tab_triangles[i].points[0]].z+compute_normals->z+0.002);
+	glVertex3f(object->tab_points[object->tab_triangles[i].points[0]].x+compute_normals[i]->x/100.0,
+		object->tab_points[object->tab_triangles[i].points[0]].y+compute_normals[i]->y/100.0,
+		object->tab_points[object->tab_triangles[i].points[0]].z+compute_normals[i]->z/100.0);
+		
 		glEnd();
-		
-		
+
+*/
 	glBegin(GL_TRIANGLES);
 		 
-	//glColor3f(1.0f,0.0f,1.0f);
+	glColor3f(0.0f,0.7f,0.7f);
 	
+	glNormal3f(compute_normals[i]->x,compute_normals[i]->y,compute_normals[i]->z);
 	
-			// Vertex 1
-	glVertex3f(object->tab_points[object->tab_triangles[i].points[0]].x,
+	// Vertex 1	
+	
+	    glVertex3f(object->tab_points[object->tab_triangles[i].points[0]].x,
 		object->tab_points[object->tab_triangles[i].points[0]].y,
 		object->tab_points[object->tab_triangles[i].points[0]].z);
 
-		// Vertex 2
+	// Vertex 2
+		
 	glVertex3f(object->tab_points[object->tab_triangles[i].points[1]].x,
 			object->tab_points[object->tab_triangles[i].points[1]].y,
 			object->tab_points[object->tab_triangles[i].points[1]].z);
 			
-		// Vertex 3
+	// Vertex 3
+	
 		glVertex3f(object->tab_points[object->tab_triangles[i].points[2]].x,
 			object->tab_points[object->tab_triangles[i].points[2]].y,
 			object->tab_points[object->tab_triangles[i].points[2]].z);
 		
 		glEnd();
 		
-	}
+		
 	
-/*
-	glBegin(GL_LINES);
-	glColor3f(1.0f,1.0f,1.0f);
-	glEnable(GL_NORMALIZE);
-	compute_normals=Normal_Calcul(object, i);
-
-	
-	glNormal3f(compute_normals->x,compute_normals->y,compute_normals->z);
-	if(compute_normals->z > 0)
-	{
-	glVertex3f(object->tab_points[object->tab_triangles[i].points[0]].x,
-		object->tab_points[object->tab_triangles[i].points[0]].y,
-		object->tab_points[object->tab_triangles[i].points[0]].z);
-	glVertex3f(object->tab_points[object->tab_triangles[i].points[0]].x+compute_normals->x+0.002,
-		object->tab_points[object->tab_triangles[i].points[0]].y+compute_normals->y+0.002,
-		object->tab_points[object->tab_triangles[i].points[0]].z+compute_normals->z+0.002);
-	}
-	
-	
-	glEnd();*/
-	}
-	
-	
-  					
+}		
 
     if (GLWin.doubleBuffered)
     {
@@ -425,10 +408,12 @@ int main(int argc, char **argv)
 		object = rigidobject_malloc() ;
 
 		rigidobject_loadply( object, argv[1] ) ;
-		Tpoint* compute_normals;
+		Tpoint** compute_normals;
+
+		compute_normals = (Tpoint**) malloc ( object->nb_triangles * sizeof ( Tpoint* ) ) ;
 		
 		for(i=0; i<object->nb_triangles; i++)
-			compute_normals=Normal_Calcul(object, i);
+			compute_normals[i]=Normal_Calcul(object, i);
 		
 	
 
@@ -488,20 +473,23 @@ int main(int argc, char **argv)
                         createGLWindow("RHex Simulator",
                             640, 480, 24, GLWin.fs);
                     }
-                    if (XLookupKeysym(&event.xkey,0) == XK_F2){	
-                        X+=0.0f;
-                        Y+=0.0f;
-                        Z+=0.01f;
-                    	}
+                    if (XLookupKeysym(&event.xkey,0) == XK_Left){	
+                        rotH -= 0.75f;
+                    }
                     
-                   	 if (XLookupKeysym(&event.xkey,0) == XK_F3){	
-                        	 X+=0.0f;
-                       		 Y+=0.0f;
-                        	 Z-=0.01f;
+                   	 if (XLookupKeysym(&event.xkey,0) == XK_Right){	
+                        rotH += 0.75f ;
                    	 }
                     
-                        if (XLookupKeysym(&event.xkey,0) == XK_F4)     
-				rotTri+=5.0f;
+                     if (XLookupKeysym(&event.xkey,0) == XK_Up) {     
+						rotV += 0.75f;
+					 }
+					 
+					 if (XLookupKeysym(&event.xkey,0) == XK_Down) {     
+						rotV -= 0.75f;
+					 }
+					
+				
                     
                     break;
                 case ClientMessage:

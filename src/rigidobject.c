@@ -202,6 +202,7 @@ void rigidobject_mult_posmat(Trigidobject* rigidobject, Tmatrix* matrix) {
 Tpoint* Normal_Calcul(Trigidobject* object, int i){
         Tpoint* TMP;
         TMP = malloc (sizeof(Tpoint));
+        float norm ;
 
 			
 	float Xba = 0;
@@ -221,13 +222,16 @@ Tpoint* Normal_Calcul(Trigidobject* object, int i){
 	Yca = object->tab_points[object->tab_triangles[i].points[2]].y - object->tab_points[object->tab_triangles[i].points[0]].y;
 	Zca = object->tab_points[object->tab_triangles[i].points[2]].z - object->tab_points[object->tab_triangles[i].points[0]].z;
 
-
-
     TMP->x = Yba * Zca - Zba * Yca;
-
 	TMP->y = Zba * Xca - Xba * Zca;
-
 	TMP->z = Xba * Yca - Yba * Xca; 
+ 	
+ 	norm = (TMP->x)*(TMP->x) + (TMP->y)*(TMP->y) + ( TMP->z)*(TMP->z) ;
+ 	norm = sqrtf( norm ) ;
+ 	
+ 	TMP->x = TMP->x / norm ;
+ 	TMP->y = TMP->y / norm ;
+ 	TMP->z = TMP->z / norm ;
  	
 	 return TMP; 
 
