@@ -107,34 +107,12 @@ void initLight(){
      glLightfv(GL_LIGHT0,GL_POSITION,LightPos);
      glLightfv(GL_LIGHT0,GL_AMBIENT,Ambient);
 	
+	/* Activation des variables de lumières */ 
+	
 	 glEnable(GL_LIGHTING) ;
 	 glEnable(GL_LIGHT0);
-	
-	/* Réfléxion de la lumière sur l'objet */
-	
-	 // glLightModeli(GL_LIGHT_MODEL_TWO_SIDE,GL_TRUE);
-	 // glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER,GL_TRUE);
-	 // glMaterialfv(GL_FRONT_AND_BACK,GL_AMBIENT,light_ambient);
-	// glMaterialfv(GL_FRONT,GL_SPECULAR,light_specular);
-	// glMaterialfv(GL_FRONT,GL_EMISSION,mat_emission);
-	// glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,low_shininess);
-	
+
 }	
-	const float DEG2RAD = 3.141593f / 180;
-Tpoint* Update_Normale(Tpoint* normale)
-	{
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
-		glPopMatrix();
-	
-		/*GLfloat Matrix_y []= { cosf (rotTri*DEG2RAD*3.6-45), 0.0, sinf(rotTri*DEG2RAD*3.6-45),
-						0.0, 1.0, 0.0,
-						-sinf(rotTri*DEG2RAD*3.6-45), 0.0, cosf(rotTri*DEG2RAD*3.6-45) };
-		glMultMatrixf(Matrix_y);*/
-		//glRotatef(rotTri*3.6,0.0f,0.0f,1.0f);
-		
-		return normale;
-	}
 
 /* Here goes our drawing code */
 int drawGLScene(Tpoint** compute_normals, Trigidobject* object){
@@ -146,71 +124,42 @@ int drawGLScene(Tpoint** compute_normals, Trigidobject* object){
 	glLoadIdentity();
 
 	glTranslated(X,Y,Z);
-	glRotatef(rotH, 0.0f, 1.0f, 0.0f);/* Effectue rotation de rotTri */
-	glRotatef(rotV, 1.0f, 0.0f, 0.0f);/* Effectue rotation de rotTri */
+	glRotatef(rotH, 0.0f, 1.0f, 0.0f);/* Effectue rotation de rotH */
+	glRotatef(rotV, 1.0f, 0.0f, 0.0f);/* Effectue rotation de rotV */
 	glPushMatrix();  
 	    
-	initLight();  
+	initLight();  // Active la lumière 
    
-for(i=0; i<object->nb_triangles; i++){  
+	for(i=0; i<object->nb_triangles; i++)
+	{  
 	
-	glEnable(GL_DEPTH_TEST);
-	
-	//glEnable(GL_NORMALIZE);
-		
-	//compute_normals=Update_Normale(compute_normals);
-	// glNormal3f(compute_normals[i]->x,compute_normals[i]->y,compute_normals[i]->z);
-	
-	// printf("%f %f %f \n", compute_normals[i]->x,compute_normals[i]->y,compute_normals[i]->z);
-	
-	//if(compute_normals[i]->z > 0)
-	//{
-	
-	
-/*	glBegin(GL_LINES);
-	
-	glColor3f(1.0f,1.0f,1.0f);
-	
-	glVertex3f(object->tab_points[object->tab_triangles[i].points[0]].x,
-		object->tab_points[object->tab_triangles[i].points[0]].y,
-		object->tab_points[object->tab_triangles[i].points[0]].z);
-		
-	glVertex3f(object->tab_points[object->tab_triangles[i].points[0]].x+compute_normals[i]->x/100.0,
-		object->tab_points[object->tab_triangles[i].points[0]].y+compute_normals[i]->y/100.0,
-		object->tab_points[object->tab_triangles[i].points[0]].z+compute_normals[i]->z/100.0);
-		
-		glEnd();
-
-*/
-	glBegin(GL_TRIANGLES);
+		glEnable(GL_DEPTH_TEST);
+		glBegin(GL_TRIANGLES);
 		 
-	glColor3f(0.0f,0.7f,0.7f);
+		glColor3f(0.0f,0.7f,0.7f);
 	
-	glNormal3f(compute_normals[i]->x,compute_normals[i]->y,compute_normals[i]->z);
+		glNormal3f(compute_normals[i]->x,compute_normals[i]->y,compute_normals[i]->z);
 	
-	// Vertex 1	
+		// Vertex 1	
 	
-	    glVertex3f(object->tab_points[object->tab_triangles[i].points[0]].x,
-		object->tab_points[object->tab_triangles[i].points[0]].y,
-		object->tab_points[object->tab_triangles[i].points[0]].z);
+			glVertex3f(object->tab_points[object->tab_triangles[i].points[0]].x,
+			object->tab_points[object->tab_triangles[i].points[0]].y,
+			object->tab_points[object->tab_triangles[i].points[0]].z);
 
-	// Vertex 2
+		// Vertex 2
 		
-	glVertex3f(object->tab_points[object->tab_triangles[i].points[1]].x,
+			glVertex3f(object->tab_points[object->tab_triangles[i].points[1]].x,
 			object->tab_points[object->tab_triangles[i].points[1]].y,
 			object->tab_points[object->tab_triangles[i].points[1]].z);
 			
-	// Vertex 3
+		// Vertex 3
 	
-		glVertex3f(object->tab_points[object->tab_triangles[i].points[2]].x,
+			glVertex3f(object->tab_points[object->tab_triangles[i].points[2]].x,
 			object->tab_points[object->tab_triangles[i].points[2]].y,
 			object->tab_points[object->tab_triangles[i].points[2]].z);
 		
-		glEnd();
-		
-		
-	
-}		
+		glEnd();	
+	}		
 
     if (GLWin.doubleBuffered)
     {
@@ -474,19 +423,19 @@ int main(int argc, char **argv)
                             640, 480, 24, GLWin.fs);
                     }
                     if (XLookupKeysym(&event.xkey,0) == XK_Left){	
-                        rotH -= 0.75f;
+                        rotH -= 0.75f; // Rotation vers la gauche
                     }
                     
                    	 if (XLookupKeysym(&event.xkey,0) == XK_Right){	
-                        rotH += 0.75f ;
+                        rotH += 0.75f ; // Rotation vers la droite
                    	 }
                     
                      if (XLookupKeysym(&event.xkey,0) == XK_Up) {     
-						rotV += 0.75f;
+						rotV += 0.75f; // Rotation vers le haut
 					 }
 					 
 					 if (XLookupKeysym(&event.xkey,0) == XK_Down) {     
-						rotV -= 0.75f;
+						rotV -= 0.75f; // Rotation vers le bas
 					 }
 					
 				
